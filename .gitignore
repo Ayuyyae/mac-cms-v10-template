@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Distribution artifacts
+dist/
+build/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+Thumbs.db
+.DS_Store
+
+# Temporary files
+tmp/
+temp/
+
+# Package lock files (uncomment if you want to ignore them)
+# package-lock.json
+# yarn.lock
+
+# Build outputs
+*.min.js
+*.min.css
+
+# Editor directories and files
+.atom/
+.emacs.desktop
+.emacs.desktop.lock
+.netbeans/
+.eclipse/
