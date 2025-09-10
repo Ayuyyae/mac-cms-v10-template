@@ -1,0 +1,17 @@
+/* Form Validator tooltip and container styles extracted from inline styles */
+/* Container appended to body */
+.fvtt{
+  position:absolute;
+  z-index:56002;
+}
+
+/* Tooltip pieces */
+#fv_content{display:block;}
+.fv_tooltip{display:block;}
+.fv_tooltip.fv-tooltip--opaque{
+  /* replicate legacy opacity filters */
+  opacity:0.95;
+  /* vendor fallbacks for very old browsers are omitted to avoid inline filters */
+}
+
+/* Optional iframe shim preserved via existing markup: .fv_iframe */

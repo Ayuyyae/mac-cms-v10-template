@@ -1,0 +1,12 @@
+/* Generic grade card styling extracted from inline styles */
+.grade{
+  width:170px;
+  line-height:40px;
+  text-align:center;
+  color:#fff;
+  margin-right:15px;
+  display:inline-block;
+}
+
+/* Colors are provided by existing classes in member.css:
+   .huang, .lan, .hong, .zi (background colors) */

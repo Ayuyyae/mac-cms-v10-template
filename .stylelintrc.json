@@ -1,0 +1,30 @@
+{
+  "extends": [
+    "stylelint-config-standard"
+  ],
+  "rules": {
+    "color-no-invalid-hex": true,
+    "declaration-block-no-duplicate-properties": true,
+    "selector-class-pattern": [
+      "^(u-[a-z0-9\\-]+|[a-z0-9]+(?:__[a-z0-9]+)?(?:--[a-z0-9]+)?)$",
+      {
+        "message": "Use BEM (block__element--modifier) for components or u-* for utilities"
+      }
+    ],
+    "declaration-no-important": [
+      true,
+      {
+        "severity": "warning",
+        "message": "Avoid !important except in utilities (css/utilities/**)"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["css/utilities/**/*.css"],
+      "rules": {
+        "declaration-no-important": null
+      }
+    }
+  ]
+}

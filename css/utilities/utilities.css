@@ -1,0 +1,41 @@
+/* Non-important hidden class for JS-toggled elements */
+.hidden{display:none;}
+/* Utilities to replace inline styles; do not change specificity */
+/* Display */
+.u-d-none{display:none!important;}
+.u-d-block{display:block!important;}
+.is-hidden{display:none!important;}
+/* Text and alignment */
+.u-text-center{text-align:center!important;}
+.u-ls-normal{letter-spacing:normal!important;}
+/* Float */
+.u-float-none{float:none!important;}
+/* Color */
+.u-color-white{color:#fff!important;}
+/* Cursor */
+.u-cursor-pointer{cursor:pointer!important;}
+/* Borders and radius */
+.u-radius-3{border-radius:3px!important;}
+.u-border-top-eee{border-top:1px solid #eee!important;}
+.u-border-red{border-color:red!important;}
+/* Spacing */
+.u-m-5{margin:5px!important;}
+.u-m-10{margin:10px!important;}
+.u-m-10-auto{margin:10px auto!important;}
+.u-mr-15{margin-right:15px!important;}
+.u-pt-10{padding-top:10px!important;}
+.u-p-20{padding:20px!important;}
+/* Sizes */
+.u-w-40{width:40px!important;}
+.u-w-80{width:80px!important;}
+.u-w-100{width:100px!important;}
+.u-w-400{width:400px!important;}
+.u-w-500{width:500px!important;}
+.u-w-98p{width:98%!important;}
+.u-h-32{height:32px!important;}
+.u-h-50{height:50px!important;}
+.u-h-150{height:150px!important;}
+/* Extra utilities */
+.u-m-0{margin:0!important;}
+.u-mt-5{margin-top:5px!important;}
+.u-mb-10{margin-bottom:10px!important;}

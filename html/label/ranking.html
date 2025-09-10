@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>{$maccms.site_name}</title>
+      <meta name="keywords" content="{$maccms.site_keywords}">
+      <meta name="description" content="{$maccms.site_description}">
+      <meta name="renderer" content="webkit|ie-comp|ie-stand">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      {include file="public/include"}
+      {include file="public/head"}
+      <link rel="stylesheet" href="{$maccms.path_tpl}css/components/ranking-list.css">
+   </head>
+   <body>
+    <main class="layoutMain">
+       <div class="responsive">
+         <div class="responsive-left">
+            <!-- Add content for left sidebar if needed -->
+         </div>
+          <div class="responsive-center">
+             <div class="parent-category">
+                <div class="ranking-row">
+                   {maccms:type ids="parent" order="asc" by="sort" flag="vod"}
+                   <div class="ranking-column">
+                      <section class="ranking-section">
+                         <h2 class="ranking-title">
+                            {$vo.type_name}热播榜
+                            <a href="{:mac_url_type($vo)}" class="more-link" draggable="false">
+                               <span>更多</span>
+                               <span class="more-link-icon">
+                                 <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="11" height="11" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 298 511.93"><path fill="currentColor" fill-rule="nonzero" d="M70.77 499.85c-16.24 16.17-42.53 16.09-58.69-.15-16.17-16.25-16.09-42.54.15-58.7l185.5-185.03L12.23 70.93c-16.24-16.16-16.32-42.45-.15-58.7 16.16-16.24 42.45-16.32 58.69-.15l215.15 214.61c16.17 16.25 16.09 42.54-.15 58.7l-215 214.46z"/></svg>
+                               </span>
+                            </a>
+                         </h2>
+                         <ul class="ranking-list">
+                           
+                           
+                           {maccms:vod num="10" type="'.$vo['type_id'].'" by="hits" order="desc"}
+                           <li>
+                               <a href="{:mac_url_vod_detail($vo)}" class="ranking-item" draggable="false">
+                                   <div class="ranking-item-content">
+                                       <span class="ranking-number">{$key+1}</span>
+                                       <img class="ranking-image" src="{$vo.vod_pic|mac_url_img}" alt="{$vo.vod_name|htmlspecialchars}" draggable="false">
+                                       <div class="ranking-info">
+                                           <h3 class="ranking-name">{$vo.vod_name}</h3>
+                                           <div class="ranking-hits">
+                                               <i class="fa fa-fire"></i> {$vo.vod_hits} 播放
+                                           </div>
+                                       </div>
+                                   </div>
+                               </a>
+                           </li>
+                           {/maccms:vod}
+                       </ul>
+                      </section>
+                   </div>
+                   {/maccms:type}
+                </div>
+             </div>
+          </div>
+          <div class="responsive-right">
+            <!-- Add content for right sidebar if needed -->
+         </div>
+       </div>
+    </main>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const links = document.querySelectorAll('a');
+        links.forEach(link => {
+          link.addEventListener('dragstart', function(event) {
+            event.preventDefault();
+          });
+        });
+      });
+    </script>
+   </body>
+   {include file="public/foot"}
+</html>

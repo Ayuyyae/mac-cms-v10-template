@@ -1,0 +1,18 @@
+{
+  "name": "mac-template-ofusion",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "guard:inline": "node scripts/guard-inline-styles.js",
+    "lint:css": "stylelint \"css/**/*.css\"",
+    "postcss:build": "postcss \"css/**/*.css\" --use autoprefixer -r",
+    "validate": "npm run guard:inline && npm run lint:css"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.41",
+    "postcss-cli": "^11.0.0",
+    "stylelint": "^16.7.0",
+    "stylelint-config-standard": "^36.0.0"
+  }
+}

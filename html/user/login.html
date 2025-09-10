@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>用户登录 - {$maccms.site_name}</title>
+<meta name="keywords" content="{$maccms.site_keywords}"/>
+<meta name="description" content="{$maccms.site_description}"/>
+	{include file="user/include" /}
+	{include file="public/include"}
+	{include file="public/head"}
+</head>
+<body>
+<div class="header">
+	<div class="layout fn-clear">
+		<ul class="nav">
+			<li class="nav-item">
+                <a class="nav-link" href="{:url('user/login')}">
+                    <svg class="icon" viewBox="0 0 24 24" width="24" height="24">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0-6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 7c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4zm6 5H6v-.99c.2-.72 3.3-2.01 6-2.01s5.8 1.29 6 2v1z" fill="currentColor"/>
+                    </svg>
+                    会员登录
+                </a>
+            </li>
+		</ul>
+	</div>
+</div>
+
+<div class="layout clearfix">
+	<div class="reg-w">
+		<form method="post" id="fm" action="">
+			<h4>账户信息</h4>
+			<div class="reg-group">
+				<label class="bd-r u-ls-normal">账号</label>
+				<input type="text" id="user_name" name="user_name" class="reg-control" placeholder="请输入您的登录账号">
+			</div>
+			<div class="reg-group">
+				<label>密码</label>
+				<input type="password" id="user_pwd" name="user_pwd" class="reg-control" placeholder="请输入您的登录密码">
+			</div>
+			{if condition="$GLOBALS['config']['user']['login_verify'] eq 1"}
+			<div class="reg-group">
+				<label>验证码</label>
+				<input type="text" class="reg-control w150" id="verify" name="verify" placeholder="请输入验证码">
+				<img class="fr mr10 mt10" id="verify_img" src="{:url('verify/index')}" onClick="this.src=this.src+'?'"  alt="单击刷新" />
+			</div>
+			{/if}
+			<input type="button" id="btn_submit" class="btn-brand btn-sub" value="立即登录">
+		</form>
+	</div>
+</div>
+
+
+<!-- // sign-box#regbox end -->
+<script type="text/javascript">
+
+	$(function(){
+		$("body").bind('keyup',function(event) {
+			if(event.keyCode==13){ $('#btnLogin').click(); }
+		});
+		$('#btn_submit').click(function() {
+			if ($('#user_name').val()  == '') { alert('请输入用户！'); $("#user_name").focus(); return false; }
+			if ($('#user_pwd').val()  == '') { alert('请输入密码！'); $("#user_pwd").focus(); return false; }
+			if ($('#verify').length> 0 && $('#verify').val()  == '') { alert('请输入验证码！'); $("#verify").focus(); return false; }
+
+			$.ajax({
+				url: "{:url('user/login')}",
+				type: "post",
+				dataType: "json",
+				data: $('#fm').serialize(),
+				beforeSend: function () {
+					$("#btn_submit").css("background","#fd6a6a").val("loading...");
+				},
+				success: function (r) {
+					if(r.code==1){
+						location.href="{:url('user/index')}";
+					}
+					else{
+						alert(r.msg);
+						$('#verify_img').click();
+					}
+				},
+				complete: function () {
+					$("#btn_submit").css("background","#fa4646").val("立即登录");
+				}
+			});
+
+		});
+	});
+
+</script>
+{include file="user/foot" /}
+</body>
+</html>

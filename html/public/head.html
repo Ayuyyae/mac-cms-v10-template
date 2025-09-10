@@ -1,0 +1,140 @@
+<div class="sticky-header clearfix">
+   <div class="container">
+       <div class="header-content">
+           <!-- Logo section -->
+           <div class="stui-header__logo">
+            <a class="logo" href="/" draggable="false">
+                <picture>
+                    <img src="{$maccms.path_tpl}images/logo/loongbao_word_dark.webp" alt="Logo Dark" class="logo-dark" draggable="false">
+                    <img src="{$maccms.path_tpl}images/logo/loongbao_word_light.webp" alt="Logo Light" class="logo-light" draggable="false">
+                </picture>
+            </a>
+        </div>        
+
+           <!-- Navigation menu -->
+           <nav class="stui-header__bar clearfix">
+               <ul class="stui-header__menu clearfix">
+                   <li class="navbar-item {if condition="$maccms.aid eq 1"} active{/if}">
+                       <a href="/" class="navbar-link" draggable="false">首页</a>
+                   </li>
+                   {maccms:type ids="parent" order="asc" by="sort" id="vo" key="key"}
+                   <li class="navbar-item {$vo.type_id}={$vo.type_pid} {if condition="($vo.type_id eq $GLOBALS['type_id'] || $vo.type_id eq $GLOBALS['type_pid'])"} active{/if}">
+                       <a href="{:mac_url_type($vo)}" class="navbar-link" draggable="false">
+                           {$vo.type_name}
+                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20" class="dropdown-icon">
+                               <path d="M10 13.831a.73.73 0 0 1-.52-.226L4.518 8.526a.8.8 0 0 1-.144-.212.65.65 0 0 1-.055-.266.66.66 0 0 1 .09-.342.65.65 0 0 1 .238-.246.7.7 0 0 1 .35-.089q.28 0 .484.198l4.847 4.963h-.663l4.84-4.963a.71.71 0 0 1 .834-.109.66.66 0 0 1 .335.588.67.67 0 0 1-.198.478l-4.97 5.073a.7.7 0 0 1-.233.177.7.7 0 0 1-.273.055"></path>
+                           </svg>
+                       </a>
+                       <ul class="navbar-dropdown">
+                           {maccms:type parent="'.$vo['type_id'].'" order="asc" by="sort" id="vo2" key="key2"}
+                           <li>
+                               <a class="navbar-dropdownbb" href="{:mac_url_type($vo2)}" class="{if condition="$vo2.type_id eq $GLOBALS['type_id']"}active{/if}" draggable="false">{$vo2.type_name}</a>
+                           </li>
+                           {/maccms:type}
+                       </ul>
+                   </li>
+                   {/maccms:type}
+                   <li class="navbar-item"><a  class="navbar-link" href="{:mac_url('label/ranking')}" title="排行榜" draggable="false">排行榜</a></li>
+               </ul>
+           </nav>
+
+           <!-- Mobile navigation toggle -->
+           <button class="navbar-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <svg class="hamburger" viewBox="0 0 100 100" aria-hidden="true" focusable="false" width="100%" height="100%">
+                <rect class="line top" width="100" height="10" x="0" y="20" rx="5"></rect>
+                <rect class="line middle" width="100" height="10" x="0" y="45" rx="5"></rect>
+                <rect class="line bottom" width="100" height="10" x="0" y="70" rx="5"></rect>
+            </svg>
+        </button>        
+
+           <!-- Theme toggle switch -->
+           <div class="theme-toggle">
+               <input type="checkbox" id="theme-switch" class="theme-switch__input">
+               <label for="theme-switch" class="theme-switch__label">
+                   <span class="crater"></span>
+                   <span class="crater"></span>
+                   <span class="crater"></span>
+                   <span class="star"></span>
+                   <span class="star"></span>
+                   <span class="star"></span>
+                   <span class="cloud"></span>
+                   <span class="cloud"></span>
+               </label>
+           </div>
+
+           <!-- Search form -->
+           <div class="stui-header__search">
+               <form id="search" name="search" method="POST" action="{:mac_url('vod/search')}" onSubmit="return qrsearch();">
+                   <div class="search-container">
+                       <input type="text" id="wd" name="wd" class="mac_wd form-control" value="" placeholder="搜索..." />
+                       <button class="submit" id="searchbutton" type="submit" name="submit">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                               <circle cx="11" cy="11" r="8"></circle>
+                               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                           </svg>
+                       </button>
+                   </div>
+               </form>
+           </div>
+       </div>
+   </div>
+</div>
+<div class="navbar-overlay"></div>
+
+<!-- External script imports -->
+<script src="{$maccms.path_tpl}js/modern-sidemenu.js"></script>
+<script src="{$maccms.path_tpl}js/modern-search.js"></script>
+<script src="{$maccms.path_tpl}js/modern-themeswitch.js"></script>
+<script src="{$maccms.path_tpl}js/modern-scroll-updown.js"></script>
+<script src="{$maccms.path_tpl}js/modern-stars.js"></script>
+
+<script>
+// Sticky header class-step approach (no inline style writes)
+const header = document.querySelector('.sticky-header');
+const MAX_SCROLL = 600;
+const MAX_LVL = 80; // maps to 0..0.8 opacity and 0..10px blur via CSS vars
+
+function computeLevel() {
+  const sp = window.scrollY || 0;
+  const opacity = Math.min(sp / MAX_SCROLL, 0.8);
+  return Math.max(0, Math.min(MAX_LVL, Math.round(opacity * 100)));
+}
+
+let lastLvl = -1;
+function updateHeaderLevel() {
+  if (!header) return;
+  const lvl = computeLevel();
+  if (lvl !== lastLvl) {
+    if (lastLvl >= 0) header.classList.remove(`sticky-header--lvl-${lastLvl}`);
+    header.classList.add(`sticky-header--lvl-${lvl}`);
+    lastLvl = lvl;
+  }
+  header.classList.toggle('scrolled', window.scrollY > 0);
+}
+
+// Optimized throttle using rAF
+function throttleRaf(fn) {
+  let ticking = false;
+  return function() {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        fn();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+}
+
+const throttledUpdateHeaderLevel = throttleRaf(updateHeaderLevel);
+
+// Event listeners
+window.addEventListener('scroll', throttledUpdateHeaderLevel);
+document.addEventListener('DOMContentLoaded', updateHeaderLevel);
+
+// Theme switch handler (kept)
+document.getElementById('theme-switch').addEventListener('change', function() {
+  document.body.classList.toggle('light-theme');
+  updateHeaderLevel();
+});
+</script>

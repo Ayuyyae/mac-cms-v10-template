@@ -1,0 +1,26 @@
+<!--登录弹窗开始-->
+<div class="mac_report reply_box">
+    <form class="gbook_form">
+        <input type="hidden" name="gbook_rid" value="{$param.id}">
+        <p class="msg_cue">请输入报错内容：</p>
+        <textarea class="gbook_content u-w-98p u-h-150" name="gbook_content">{$param.name}</textarea>
+        <div class="msg_code">
+            {if condition="$gbook.verify eq 1"}
+            验证码：<input type="text" name="verify" class="mac_verify u-w-80" maxlength="4">
+            {/if}
+            <div class="remaining-w fr">还可输入<span class="gbook_remaining remaining " > </span></div>
+        </div>
+        <div class="u-text-center">
+            <input type="button" class="gbook_submit submit_btn u-w-100 u-h-32 u-m-10-auto u-cursor-pointer" value="提交留言">
+        </div>
+
+    </form>
+</div>
+<!--登录弹窗结束-->
+<script>
+    $(function(){
+        MAC.Gbook.Login = {$gbook.login};
+        MAC.Gbook.Verify = {$gbook.verify};
+        MAC.Gbook.Init();
+    });
+</script>
