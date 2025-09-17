@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {include file="public/include"}
     {include file="public/head"}
-<link rel="stylesheet" href="{$maccms.path_tpl}css/components/detail-links.css">
+<link rel="stylesheet" href="{$maccms.path_tpl}css/components/detail-links.css?v={$tpl_version}">
 </head>
 <body>
     <main class="layoutMain">
@@ -159,7 +159,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const setupShowMore = (listId, buttonId) => {
         const list = document.getElementById(listId);
         const showMoreBtn = document.getElementById(buttonId);
-        const items = Array.from(list.querySelectorAll(`.${listId.replace('List', '-item')}`));
+        const itemType = listId.replace('List', '');
+        const items = Array.from(list.querySelectorAll(`.${itemType.toLowerCase()}-item`));
 
         if (!list || !showMoreBtn || items.length === 0) {
             console.warn(`Setup failed for ${listId}`);
