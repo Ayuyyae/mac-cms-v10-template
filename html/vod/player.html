@@ -1,56 +1,282 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="{$maccms.site_lang|default='zh-CN'}">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
-    <title>iframe播放器</title>
-    <style>*{word-wrap:break-word;outline:none} html,body{width:100%;height:100%;background:#000;color:#fff;}
-    .player_popeom{ width:500px;height:150px; position:absolute;text-align:center; top:50%;left:50%;margin:-75px 0 0 -250px; }
-    .player_popeom a{  padding: 10px 16px;
-        font-size: 18px;
-        line-height: 1.3333333;
-        border-radius: 6px; color: #fff;  background-color: #5cb85c;  border-color: #4cae4c;  }
-    </style>
-    <script src="{$maccms.path}static/js/jquery.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{if isset($obj.vod_name)}{$obj.vod_name} - {/if}{$maccms.site_name}</title>
+    <link rel="stylesheet" href="{$maccms.path_tpl}css/default.css">
+    <link rel="stylesheet" href="{$maccms.path_tpl}css/components/video-player.css">
     <script>var maccms={"path":"__ROOT__","mid":"{$maccms['mid']}","url":"{$maccms['site_url']}","wapurl":"{$maccms['site_wapurl']}","mob_status":"{$maccms['mob_status']}"};</script>
 </head>
-<body topmargin="0" leftmargin="0" marginheight="0" marginwidth="0">
-{$player_data}
-{$player_js}
-{if condition="$popedom.code gt 1"/}
-<div class="player_showtry u-d-none">
-    <div class="player_box">
-        <div class="player_popeom">
-            {if condition="$obj.vod_points_play eq 0"}
-            <p>试看{$popedom.trysee}分钟结束，完整观看本影片需要升级会员组，请升级后观看。</p>
-            <small>提示：购买VIP会员组，享受超级权限，谢谢支持。</small>
-            <p><a href="{:url('user/index')}" target="_blank">会员中心</a> <a href="{:url('user/upgrade')}" target="_blank">马上升级</a></p>
-            {else/}
-            <p>试看{$popedom.trysee}分钟结束，完整观看本影片需要花费{$obj.vod_points_play}积分，请支付后观看。</p>
-            <small>提示：一次支付，永久观看，不重复扣费，谢谢支持。</small>
-
-            {if condition="$user.group.group_id eq 1"}
-                <p><a href="{:url('user/login')}" target="_blank">马上登录</a></p>
-            {else/}
-                <p><a href="{:url('user/buy')}" target="_blank">马上充值</a> <a href="javascript:;" onclick="window.parent.MAC.User.BuyPopedom(this)" data-id="{$obj.vod_id}" data-sid="{$param.sid}" data-nid="{$param.nid}" data-type="4" data-mid="1">确认购买</a></p>
-            {/if}
-            {/if}
-
+<body class="player-page">
+<main class="player-container" role="main">
+    <div class="video-wrapper">
+        <div id="player-embed" class="player-embed">
+            {$player_data}
+            {$player_js}
         </div>
+        <div id="trial-countdown" class="trial-countdown" aria-live="polite" aria-hidden="true">
+            <div class="countdown-content">
+                <div class="countdown-timer">
+                    <span class="countdown-text">试看剩余时间:</span>
+                    <span class="countdown-time" id="countdown-display">--:--</span>
+                </div>
+            </div>
+        </div>
+        {if condition="$popedom.code gt 1"}
+        <div id="trial-overlay" class="trial-overlay" role="dialog" aria-modal="true" aria-labelledby="trial-title" aria-describedby="trial-description" aria-hidden="true">
+            <div class="trial-content">
+                <div class="trial-header">
+                    <h2 id="trial-title" class="trial-title">试看时间结束</h2>
+                    <button type="button" class="trial-close" aria-label="关闭" onclick="closeTrialOverlay()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="trial-body">
+                    {if condition="$obj.vod_points_play eq 0"}
+                    <p id="trial-description" class="trial-description">
+                        试看{$popedom.trysee}分钟结束，完整观看本影片需要升级会员组，请升级后观看。
+                    </p>
+                    <p class="trial-notice">提示：购买VIP会员组，享受超级权限，谢谢支持。</p>
+                    <div class="trial-actions">
+                        <a href="{:url('user/index')}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">会员中心</a>
+                        <a href="{:url('user/upgrade')}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">马上升级</a>
+                    </div>
+                    {else/}
+                    <p id="trial-description" class="trial-description">
+                        试看{$popedom.trysee}分钟结束，完整观看本影片需要花费{$obj.vod_points_play}积分，请支付后观看。
+                    </p>
+                    <p class="trial-notice">提示：一次支付，永久观看，不重复扣费，谢谢支持。</p>
+                    <div class="trial-actions">
+                        {if condition="$user.group.group_id eq 1"}
+                        <a href="{:url('user/login')}" target="_blank" rel="noopener noreferrer" class="btn btn-primary">马上登录</a>
+                        {else/}
+                        <a href="{:url('user/buy')}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">马上充值</a>
+                        <button type="button" class="btn btn-primary" onclick="purchaseContent(this)" 
+                                data-id="{$obj.vod_id}" data-sid="{$param.sid}" data-nid="{$param.nid}" data-type="4" data-mid="1">
+                            确认购买
+                        </button>
+                        {/if}
+                    </div>
+                    {/if}
+                </div>
+            </div>
+        </div>
+        {/if}
     </div>
-</div>
+</main>
+
 <script>
-    //方式一本页面计算
-     window.setTimeout(function(){
-     $('.MacPlayer').html( $('.player_showtry').html() );
-     },1000*60*{$popedom.trysee});
+// Modern Player Management - No jQuery
+class ModernVideoPlayer {
+    constructor() {
+        this.trialDuration = {$popedom.trysee|default=0} * 60; // Convert to seconds
+        this.countdown = null;
+        this.focusableElements = null;
+        this.lastFocusedElement = null;
+        
+        this.init();
+    }
+    
+    init() {
+        if (this.trialDuration > 0) {
+            this.startTrialCountdown();
+        }
+        this.setupEventListeners();
+        this.setupAccessibility();
+    }
+    
+    startTrialCountdown() {
+        const countdownElement = document.getElementById('trial-countdown');
+        const displayElement = document.getElementById('countdown-display');
+        
+        if (!countdownElement || !displayElement) return;
+        
+        let remainingTime = this.trialDuration;
+        countdownElement.setAttribute('aria-hidden', 'false');
+        
+        this.countdown = setInterval(() => {
+            const minutes = Math.floor(remainingTime / 60);
+            const seconds = remainingTime % 60;
+            displayElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Show warning at 30 seconds
+            if (remainingTime === 30) {
+                this.announceTimeRemaining('30秒后试看结束');
+            }
+            
+            remainingTime--;
+            
+            if (remainingTime < 0) {
+                clearInterval(this.countdown);
+                this.showTrialOverlay();
+            }
+        }, 1000);
+    }
+    
+    showTrialOverlay() {
+        const overlay = document.getElementById('trial-overlay');
+        const countdown = document.getElementById('trial-countdown');
+        
+        if (!overlay) return;
+        
+        // Hide countdown
+        if (countdown) {
+            countdown.setAttribute('aria-hidden', 'true');
+        }
+        
+        // Pause video if possible
+        this.pauseVideo();
+        
+        // Show overlay with transition
+        overlay.classList.add('active');
+        overlay.setAttribute('aria-hidden', 'false');
+        
+        // Focus management
+        this.trapFocus(overlay);
+        
+        // Announce to screen readers
+        this.announceTimeRemaining('试看时间结束，请升级或购买继续观看');
+    }
+    
+    pauseVideo() {
+        try {
+            // Try to pause HTML5 video
+            const videos = document.querySelectorAll('video');
+            videos.forEach(video => video.pause());
+            
+            // Try parent window communication for iframe players
+            if (window.parent && window.parent.postMessage) {
+                window.parent.postMessage({ action: 'pause' }, '*');
+            }
+        } catch (e) {
+            console.warn('Could not pause video:', e);
+        }
+    }
+    
+    trapFocus(element) {
+        this.focusableElements = element.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        
+        if (this.focusableElements.length > 0) {
+            this.lastFocusedElement = document.activeElement;
+            this.focusableElements[0].focus();
+        }
+    }
+    
+    announceTimeRemaining(message) {
+        const announcement = document.createElement('div');
+        announcement.setAttribute('aria-live', 'assertive');
+        announcement.setAttribute('aria-atomic', 'true');
+        announcement.style.position = 'absolute';
+        announcement.style.left = '-10000px';
+        announcement.textContent = message;
+        
+        document.body.appendChild(announcement);
+        setTimeout(() => document.body.removeChild(announcement), 1000);
+    }
+    
+    setupEventListeners() {
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                this.closeTrialOverlay();
+            }
+            
+            // Tab trapping in overlay
+            const overlay = document.getElementById('trial-overlay');
+            if (overlay && overlay.classList.contains('active') && this.focusableElements) {
+                this.handleTabTrapping(e);
+            }
+        });
+    }
+    
+    handleTabTrapping(e) {
+        if (e.key !== 'Tab') return;
+        
+        const firstElement = this.focusableElements[0];
+        const lastElement = this.focusableElements[this.focusableElements.length - 1];
+        
+        if (e.shiftKey) {
+            if (document.activeElement === firstElement) {
+                e.preventDefault();
+                lastElement.focus();
+            }
+        } else {
+            if (document.activeElement === lastElement) {
+                e.preventDefault();
+                firstElement.focus();
+            }
+        }
+    }
+    
+    closeTrialOverlay() {
+        const overlay = document.getElementById('trial-overlay');
+        if (overlay) {
+            overlay.classList.remove('active');
+            overlay.setAttribute('aria-hidden', 'true');
+            
+            // Return focus
+            if (this.lastFocusedElement) {
+                this.lastFocusedElement.focus();
+            }
+        }
+    }
+    
+    setupAccessibility() {
+        // Ensure proper ARIA attributes are set
+        const overlay = document.getElementById('trial-overlay');
+        if (overlay) {
+            overlay.setAttribute('role', 'dialog');
+            overlay.setAttribute('aria-modal', 'true');
+        }
+    }
+}
 
-    //方式二调用父页面公共函数库
-    //window.parent.MAC.User.PopedomCallBack({$popedom.trysee},$('.player_showtry').html() );
+// Global functions for template compatibility
+function closeTrialOverlay() {
+    if (window.modernPlayer) {
+        window.modernPlayer.closeTrialOverlay();
+    }
+}
+
+function purchaseContent(element) {
+    const data = {
+        id: element.dataset.id,
+        sid: element.dataset.sid,
+        nid: element.dataset.nid,
+        type: element.dataset.type,
+        mid: element.dataset.mid
+    };
+    
+    // Try parent window communication first
+    try {
+        if (window.parent && window.parent.MAC && window.parent.MAC.User) {
+            window.parent.MAC.User.BuyPopedom(element);
+            return;
+        }
+    } catch (e) {
+        console.warn('Parent window communication failed:', e);
+    }
+    
+    // Fallback: redirect to purchase page
+    const purchaseUrl = `${maccms.url}index.php/user/buy?` + 
+        Object.keys(data).map(key => `${key}=${encodeURIComponent(data[key])}`).join('&');
+    window.open(purchaseUrl, '_blank', 'noopener,noreferrer');
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        window.modernPlayer = new ModernVideoPlayer();
+    });
+} else {
+    window.modernPlayer = new ModernVideoPlayer();
+}
 </script>
-{/if}
-
 
 </body>
 </html>
-

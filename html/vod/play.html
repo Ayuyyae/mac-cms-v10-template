@@ -1,216 +1,262 @@
 <!DOCTYPE html>
-<html>
+<html lang="{$maccms.site_lang|default='zh-CN'}">
 <head>
     <meta charset="utf-8">
     <title>{$obj.vod_name}在线播放 - {$maccms.site_name}</title>
     <meta name="keywords" content="{$obj.vod_name}在线观看" />
     <meta name="description" content="{$obj.vod_name}剧情:{$obj.vod_blurb}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="robots" content="noindex,nofollow">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; frame-src 'self' http://union.maccms.la https://vip.dytt-tvb.com https://union.dplayerstatic.com; img-src 'self' data: https:;">
     {include file="public/include"}
     {include file="public/head"}
+    <link rel="stylesheet" href="{$maccms.path_tpl}css/components/video-player.css?v={$tpl_version}">
     <style>
-        /* Custom styles for the play page */
-        .video-container {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
-            background-color: #000;
-            margin-bottom: 0; /* Remove margin to align with the back link */
-            border-radius: 8px 8px 0 0; /* Rounded top corners only */
-            overflow: hidden;
+        /* Browser hijacking protection */
+        html, body, * {
+            -webkit-user-modify: read-only !important;
         }
-        .video-player {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        
+        /* Hide video elements from browser detection */
+        video, iframe[src*="player"], [class*="video"], [id*="video"] {
+            pointer-events: auto !important;
+            visibility: visible !important;
+            display: block !important;
         }
+        
+        /* Prevent browser from detecting video content */
+        meta[property="og:type"] { display: none !important; }
+        meta[name*="video"] { display: none !important; }
+        
+        /* Advanced anti-hijacking protection - non-UI affecting */
+        
+        /* Protect video container from browser interference - minimal approach */
+        .video-player, .video-container, [class*="player"] {
+            isolation: isolate !important;
+        }
+        
 
-        .back-link-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: var(--card-bg);
-            border-radius: 0 0 8px 8px; /* Rounded bottom corners only */
-            padding: 5px 10px;
-            margin-bottom: 30px;
+        
+        /* Hide from browser video detection patterns */
+        iframe, embed, object {
+            opacity: 0.99 !important; /* Slight transparency to avoid detection */
         }
-
-        .back-link {
-            display: inline-flex; /* Ensure the link is not stretching */
-            align-items: center;  /* Align items vertically */
-            text-decoration: none; /* Remove underline from link */
-            font-size: 14px;
+        
+        /* Prevent browser UI injection */
+        body::before, body::after, html::before, html::after {
+            content: none !important;
+            display: none !important;
         }
-
-        .back-link-icon {
-            transition: transform 0.3s ease; /* Smooth transition for transform */
-            margin-right: 10px; /* Optional: Add space between icon and text */
+        
+        /* Block common browser extension selectors */
+        [class*="browser"], [class*="extension"], [class*="addon"], 
+        [id*="browser"], [id*="extension"], [id*="addon"] {
+            display: none !important;
+            visibility: hidden !important;
         }
-
-        .back-link:hover .back-link-icon {
-            color: var(--theme-color);
-            transform: translateX(-3px); /* Move left */
+        
+        /* Force our button styles */
+        .episode-sort-btn,
+        button.episode-sort-btn,
+        [class*="episode-sort"] {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            color: var(--text-color) !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            display: inline-flex !important;
+            font-family: inherit !important;
+            width: auto !important;
+            max-width: none !important;
         }
-        .back-link:hover {
-            color: var(--theme-color);
-
+        
+        /* Prevent browser extension interference */
+        .episode-sort-btn:not([style*="display: none"]) {
+            display: inline-flex !important;
+            visibility: visible !important;
         }
-        .content-details {
-            background-color: var(--card-bg);
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 30px;
+        
+        /* Meta tag protection */
+        meta[name="referrer"] {
+            content: "no-referrer" !important;
         }
-
-        .comments-section {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .comment {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 15px 0;
-        }
-
-        .comment:last-child {
-            border-bottom: none;
-        }
-
-        .comment-author {
-            font-weight: bold;
-            color: var(--theme-color);
-        }
-
-        .comment-content {
-            margin: 10px 0;
-        }
-
-        .comment-date {
-            font-size: 12px;
-            color: var(--secondary-text-color);
-        }
-
-        .copyright-restriction-message {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    font-size: 18px;
-    text-align: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-.copyright-restriction-message p {
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-}
     </style>
 </head>
-<body>
-    <main class="layoutMain">
+<body class="play-page-body">
+    <main class="layoutMain" role="main">
         <div class="responsive">
             <div class="responsive-left">
-                <!-- Add content for left sidebar if needed -->
+                <!-- Sidebar content for future use -->
             </div>
+            
             <div class="responsive-center">
                 <div class="parent-category">
-                    <section>
+                    <!-- Video Player Section -->
+                    <section class="video-section" aria-labelledby="video-title">
                         <div class="video-container">
                             {if empty($obj.vod_copyright) || $GLOBALS['config']['app']['copyright_status'] == 0}
-                                <div class="video-player">
+                                <div class="video-player" role="region" aria-label="视频播放器">
                                     {$player_data} {$player_js}
                                 </div>
                             {else}
-                                <div class="copyright-restriction-message">
+                                <div class="copyright-restriction-message" role="alert" aria-live="polite">
                                     <p>{$GLOBALS['config']['app']['copyright_notice']}</p>
                                 </div>
                             {/if}
                         </div>
-                        <div class="back-link-container">
-                            {php}
-                            $total_episodes = count($obj['vod_play_list'][$param['sid']]['urls']);
-                            {/php}
-                            {if condition="$total_episodes > 1"}
-                            <a href="{$obj.player_info.link_pre}" class="back-link" draggable="false">
-                                <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="11" height="11" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 298.04" class="back-link-icon"><path fill="currentColor" fill-rule="nonzero" d="M70.94 285.81c-16.17 16.24-42.46 16.32-58.71.15-16.24-16.16-16.32-42.46-.15-58.7L226.57 12.23c16.16-16.24 42.46-16.32 58.7-.15l214.65 215.18c16.17 16.24 16.09 42.54-.15 58.7-16.25 16.17-42.54 16.09-58.71-.15L256 100.29 70.94 285.81z"/></svg>
-
-                                上集</a>
-
-                            {/if}
                         
-                            <a href="{:mac_url_vod_detail($obj)}" class="back-link centered-link" draggable="false">
-                                <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 512" width="20" height="20" class="back-link-icon"><path fill="currentColor" fill-rule="nonzero" d="M256 0c70.69 0 134.7 28.66 181.02 74.98C483.34 121.31 512 185.31 512 256c0 70.69-28.66 134.7-74.98 181.02C390.7 483.34 326.69 512 256 512c-70.69 0-134.7-28.66-181.02-74.98C28.66 390.7 0 326.69 0 256c0-70.69 28.66-134.69 74.98-181.02C121.3 28.66 185.31 0 256 0zm17.75 342.25h29.15v29.32h-93.79v-29.32h28.76v-92.34h-28.76v-29.32h64.64v121.66zm-27.94-150.37c-7.08-.05-13.12-2.53-18.2-7.56-5.08-5.01-7.56-11.11-7.56-18.25 0-7.01 2.48-13.06 7.56-18.08 5.08-5.02 11.12-7.55 18.2-7.55 6.95 0 12.99 2.53 18.08 7.55 5.13 5.02 7.67 11.07 7.67 18.08 0 4.72-1.2 9.07-3.56 12.94-2.36 3.93-5.45 7.07-9.31 9.37-3.87 2.3-8.17 3.45-12.88 3.5zm171.9-97.59C376.33 52.92 319.15 27.32 256 27.32c-63.15 0-120.33 25.6-161.71 66.97C52.92 135.68 27.32 192.85 27.32 256c0 63.15 25.6 120.33 66.97 161.71 41.38 41.37 98.56 66.97 161.71 66.97 63.15 0 120.33-25.6 161.71-66.97 41.37-41.38 66.97-98.56 66.97-161.71 0-63.15-25.6-120.32-66.97-161.71z"/></svg>
-                                详情
-                            </a>
-                        
-                            {if condition="$total_episodes > 1"}
-                            <a href="{$obj.player_info.link_next}" class="more-link" draggable="false">下集
-                                <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="11" height="11" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 298.04" class="more-link-icon"><path fill="currentColor" fill-rule="nonzero" d="M12.08 70.78c-16.17-16.24-16.09-42.54.15-58.7 16.25-16.17 42.54-16.09 58.71.15L256 197.76 441.06 12.23c16.17-16.24 42.46-16.32 58.71-.15 16.24 16.16 16.32 42.46.15 58.7L285.27 285.96c-16.24 16.17-42.54 16.09-58.7-.15L12.08 70.78z"/></svg>
-                            </a>
-                            {/if}
-                        </div>
+                        <!-- Navigation Controls -->
+                        <nav class="back-link-container" aria-label="剧集导航">
+                            <!-- Navigation controls removed - 详情 button moved to content details -->
+                        </nav>
                     </section>
-                    <div class="content-details">
-                        <h1 class="detail-title">{$obj.vod_name}</h1>
-                        <div class="detail-info">
-
-                            <span class="detail-info-label"></span>{$obj.vod_remarks}
-                            <span class="split-line"></span>
-                            <span class="detail-info-label">播放：</span>{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}
-                            <span class="split-line"></span>
-
-                        </div>
-                        
-                        <section class="episode-section">
-                            <h2 class="detail-section-title">
-                                播放列表
-                                <a href="#" class="more-link" onclick="toggleOrderAndFlip(); return false;" draggable="false">
-                                    切换顺序
-                                    <svg id="orderIcon" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 421.65" width="20" height="20" class="more-link-icon"><path fill="currentColor" fill-rule="nonzero" d="M383.01 379.71c11.57 0 20.97 9.4 20.97 20.97 0 11.57-9.4 20.97-20.97 20.97l-362.04-.44C9.4 421.21 0 411.81 0 400.24c0-11.57 9.4-20.97 20.97-20.97l362.04.44zm-90.97-238.93c-7.91 7.94-20.8 7.99-28.74.08-7.94-7.91-7.99-20.8-.08-28.74L369.33 5.98c7.91-7.94 20.79-7.99 28.73-.08l107.98 107.91c7.95 7.94 7.95 20.87 0 28.81-7.94 7.95-20.87 7.95-28.81 0l-73.12-73.11.32 206.4c0 11.2-9.1 20.3-20.3 20.3-11.2 0-20.29-9.1-20.29-20.3l-.32-206.63-71.48 71.5zM171.62 40.59c11.57 0 20.97 9.41 20.97 20.98 0 11.56-9.4 20.97-20.97 20.97l-150.65-.16C9.4 82.38 0 72.97 0 61.4c0-11.56 9.4-20.97 20.97-20.97l150.65.16zm41.33 170.71c11.57 0 20.97 9.4 20.97 20.97 0 11.57-9.4 20.97-20.97 20.97l-191.98-.23C9.4 253.01 0 243.61 0 232.04c0-11.56 9.4-20.97 20.97-20.97l191.98.23z"/></svg>
+                    
+                    <!-- Content Details Section -->
+                    <section class="content-details" aria-labelledby="content-title">
+                        <header>
+                            <h1 id="content-title" class="detail-title">{$obj.vod_name}</h1>
+                            <div class="detail-info" role="contentinfo">
+                                <span class="detail-info-content">{$obj.vod_remarks}</span>
+                                <span class="split-line" aria-hidden="true"></span>
+                                <span class="detail-info-label">播放：</span>
+                                <span class="detail-info-content">{$obj['vod_play_list'][$param['sid']]['urls'][$param['nid']]['name']}</span>
+                                <span class="split-line" aria-hidden="true"></span>
+                                <a href="{:mac_url_vod_detail($obj)}" class="back-link detail-link" draggable="false" aria-label="查看详情页">
+                                    详情
                                 </a>
-                            </h2>
-                            <div class="episode-list" id="episodeList">
+                            </div>
+                        </header>
+                        
+                        <!-- Episode List Section -->
+                        <section class="episode-section" aria-labelledby="episode-title">
+                            <header class="episode-header">
+                                <h2 id="episode-title" class="detail-section-title">
+                                    播放列表
+                                </h2>
+                                <button type="button" class="more-link episode-sort-btn" onclick="toggleOrderAndFlip(); return false;" aria-label="切换剧集排序">
+                                    切换顺序
+                                    <svg id="orderIcon" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 421.65" width="20" height="20" class="more-link-icon" aria-hidden="true">
+                                        <path fill="currentColor" fill-rule="nonzero" d="M383.01 379.71c11.57 0 20.97 9.4 20.97 20.97 0 11.57-9.4 20.97-20.97 20.97l-362.04-.44C9.4 421.21 0 411.81 0 400.24c0-11.57 9.4-20.97 20.97-20.97l362.04.44zm-90.97-238.93c-7.91 7.94-20.8 7.99-28.74.08-7.94-7.91-7.99-20.8-.08-28.74L369.33 5.98c7.91-7.94 20.79-7.99 28.73-.08l107.98 107.91c7.95 7.94 7.95 20.87 0 28.81-7.94 7.95-20.87 7.95-28.81 0l-73.12-73.11.32 206.4c0 11.2-9.1 20.3-20.3 20.3-11.2 0-20.29-9.1-20.29-20.3l-.32-206.63-71.48 71.5zM171.62 40.59c11.57 0 20.97 9.41 20.97 20.98 0 11.56-9.4 20.97-20.97 20.97l-150.65-.16C9.4 82.38 0 72.97 0 61.4c0-11.56 9.4-20.97 20.97-20.97l150.65.16zm41.33 170.71c11.57 0 20.97 9.4 20.97 20.97 0 11.57-9.4 20.97-20.97 20.97l-191.98-.23C9.4 253.01 0 243.61 0 232.04c0-11.56 9.4-20.97 20.97-20.97l191.98.23z"/>
+                                    </svg>
+                                </button>
+                            </header>
+                            
+                            <div class="episode-list" id="episodeList" role="list" aria-label="剧集列表">
                                 {maccms:foreach name="obj.vod_play_list" id="vo" key="key"}
                                 {maccms:foreach name="vo.urls" id="vo2" key="key2" }
-                                <div class="episode {if condition="$obj.player_info.sid eq $vo.sid && $obj.player_info.nid eq $vo2.nid"}currentplay{/if}">
-                                    <a href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}" draggable="false">{$vo2.name}</a>
+                                <div class="episode {if condition="$obj.player_info.sid eq $vo.sid && $obj.player_info.nid eq $vo2.nid"}currentplay{/if}" role="listitem">
+                                    <a href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}" draggable="false" 
+                                       {if condition="$obj.player_info.sid eq $vo.sid && $obj.player_info.nid eq $vo2.nid"}aria-current="page"{/if}
+                                       title="播放第{$vo2.name}集">
+                                        {$vo2.name}
+                                    </a>
                                 </div>
                                 {/maccms:foreach}
                                 {/maccms:foreach}
                             </div>
                         </section>
-                    </div>
+                    </section>
                     
-                    <section class="comments-section">
-                        <h2 class="section-title">评论功能 Coming Soon</h2>
-                        <div class="comment">
-                            <div class="comment-author">用户1</div>
-                            <div class="comment-content">这是一条评论内容。</div>
-                            <div class="comment-date">2024-07-22 10:30</div>
-                        </div>
-                        <div class="comment">
-                            <div class="comment-author">用户2</div>
-                            <div class="comment-content">这是另一条评论内容。</div>
-                            <div class="comment-date">2024-07-22 11:15</div>
+                    <!-- Comments Section -->
+                    <section class="comments-section" aria-labelledby="comments-title">
+                        <header>
+                            <h2 id="comments-title" class="section-title">评论功能</h2>
+                            <span class="coming-soon-badge" aria-label="即将推出">Coming Soon</span>
+                        </header>
+                        
+                        <div class="comments-preview" aria-label="评论预览">
+                            <article class="comment" role="article">
+                                <header class="comment-header">
+                                    <span class="comment-author">用户1</span>
+                                    <time class="comment-date" datetime="2024-07-22T10:30">2024-07-22 10:30</time>
+                                </header>
+                                <div class="comment-content">
+                                    这是一条评论内容。
+                                </div>
+                            </article>
+                            
+                            <article class="comment" role="article">
+                                <header class="comment-header">
+                                    <span class="comment-author">用户2</span>
+                                    <time class="comment-date" datetime="2024-07-22T11:15">2024-07-22 11:15</time>
+                                </header>
+                                <div class="comment-content">
+                                    这是另一条评论内容。
+                                </div>
+                            </article>
                         </div>
                     </section>
                 </div>
             </div>
+            
             <div class="responsive-right">
-                <!-- Add content for right sidebar if needed -->
+                <!-- Sidebar content for future use -->
             </div>
         </div>
     </main>
+    
     {include file="public/foot"}
+    
+    <!-- Anti-hijacking and URL obfuscation -->
+    <script src="{$maccms.path_tpl}js/url-obfuscator.js"></script>
+    
+    <!-- JavaScript -->
     <script src="{$maccms.path_tpl}js/modern-sorting.js"></script>
+    <script src="{$maccms.path_tpl}js/modern-player.js"></script>
+    
+    <script>
+    // Aggressive video sizing fix for MacCMS player content
+    function fixVideoSize() {
+        // Target the video-player div where MacCMS injects content
+        const videoPlayer = document.querySelector('.video-player');
+        if (videoPlayer) {
+            // Force the video-player container itself
+            videoPlayer.style.width = '100%';
+            videoPlayer.style.height = '100%';
+            videoPlayer.style.position = 'absolute';
+            videoPlayer.style.top = '0';
+            videoPlayer.style.left = '0';
+            
+            // Target all possible elements inside video-player
+            const allElements = videoPlayer.querySelectorAll('*');
+            allElements.forEach(element => {
+                // Force dimensions on all elements
+                element.style.width = '100%';
+                element.style.height = '100%';
+                
+                // Remove aspect ratio constraints
+                element.style.paddingBottom = '0';
+                element.style.paddingTop = '0';
+                element.style.aspectRatio = 'unset';
+                
+                // Force video elements specifically
+                if (['IFRAME', 'VIDEO', 'EMBED', 'OBJECT'].includes(element.tagName)) {
+                    element.style.position = 'absolute';
+                    element.style.top = '0';
+                    element.style.left = '0';
+                    element.style.objectFit = 'cover';
+                }
+            });
+        }
+    }
+    
+    // Run immediately and frequently to catch MacCMS dynamic content
+    fixVideoSize();
+    document.addEventListener('DOMContentLoaded', fixVideoSize);
+    window.addEventListener('load', fixVideoSize);
+    
+    // Run more frequently to catch MacCMS player loading
+    setInterval(fixVideoSize, 500);
+    
+    // Also watch for DOM changes
+    const observer = new MutationObserver(fixVideoSize);
+    observer.observe(document.body, { childList: true, subtree: true });
+    </script>
 </body>
 </html>
