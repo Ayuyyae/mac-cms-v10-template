@@ -11,8 +11,6 @@
     border: 1px solid rgba(255,255,255,0.1);
 }
 
-
-
 /* Filter Row Styles - Enhanced */
 .filter-row {
     padding: 10px 10px;
@@ -24,8 +22,6 @@
     border-radius: 6px;
     margin-bottom: 2px;
 }
-
-
 
 .filter-row:last-child {
     border-bottom: none;
@@ -63,161 +59,12 @@
     background: rgba(255,255,255, 0.02);
 }
 
-
-
 .filter-row dd:active {
     cursor: grabbing;
 }
 
-/* Prevent text selection while dragging */
-.filter-row dd.active,
-.filter-row dd.active .filter-item {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-/* Slider Styles - Enhanced Professional */
-.filter-slider {
-    overflow-x: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-    position: relative;
-    padding: 2px 0;
-}
-
-.filter-slider::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
-}
-
-.filter-slider.scrollable {
-    position: relative;
-}
-
-.filter-slider.scrollable::before,
-.filter-slider.scrollable::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 20px;
-    pointer-events: none;
-    z-index: 2;
-    transition: opacity 0.3s ease;
-}
-
-.filter-slider.scrollable::before {
-    left: 0;
-    background: linear-gradient(to right, var(--card-bg), transparent);
-    opacity: 0;
-    display: none; /* Disable left gradient to avoid covering first option */
-}
-
-.filter-slider.scrollable::after {
-    right: 0;
-    background: linear-gradient(to left, var(--card-bg), transparent);
-    opacity: 1;
-}
-
-.filter-slider.scrollable.at-start::before {
-    opacity: 0;
-}
-
-.filter-slider.scrollable.at-end::after {
-    opacity: 0;
-}
-
-.filter-slider.scrollable:not(.at-start)::before {
-    opacity: 0; /* Keep left gradient hidden to avoid covering first option */
-}
-
-.slider-content {
-    display: flex;
-    flex-wrap: nowrap;
-    padding: 0 4px;
-    transition: transform 0.1s ease-out;
-}
-
-.slider-content.dragging {
-    transition: none;
-    cursor: grabbing;
-}
-
-.slider-content.momentum {
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-/* Filter Item Styles - Universal Theme Compatible */
-.filter-item {
-    text-decoration: none;
-    margin-right: 15px;
-    white-space: nowrap;
-    user-select: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    -webkit-user-drag: none;
-    transition: all 0.2s ease;
-    color: var(--text-color);
-    background: rgba(128,128,128, 0.15);
-    border: 1px solid rgba(128,128,128, 0.2);
-    font-size: 13px;
-    font-weight: 500;
-    position: relative;
-    overflow: hidden;
-}
-
-
-
-.filter-item:hover {
-    color: white;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-    background: var(--theme-color, #007bff);
-    border-color: var(--theme-color, #007bff);
-}
-
-.filter-item:active {
-    color: white;
-    transform: translateY(0);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    background: var(--theme-color, #0056b3);
-    transition-duration: 0.1s;
-}
-
-.filter-item.selected {
-    background: var(--theme-color, #007bff);
-    color: white !important;
-    border-color: var(--theme-color, #007bff);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    font-weight: 600;
-}
-
-/* Ensure selected items are visible on light themes */
-.filter-item.selected:hover {
-    background: var(--theme-color, #0056b3);
-    color: white !important;
-}
-
-.filter-item.selected:focus {
-    background: var(--theme-color, #007bff);
-    color: white !important;
-}
-
-
-
-.filter-item:focus:not(:hover):not(:active):not(.selected) {
-    color: var(--text-color);
-    background-color: transparent;
-    transform: none;
-}
-
-/* Toggle Button Styles - Enhanced Professional */
+/* Toggle Button Styles - Enhanced Professional (Icon Only) */
 .filter-toggle {
-    position: absolute;
-    top: 10px;
-    right: 10px;
     background: rgba(255,255,255, 0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -227,13 +74,20 @@
     padding: 5px;
     display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: center;
+    gap: 0; /* Remove gap between text and icon */
     color: var(--text-color);
     font-size: 13px;
     font-weight: 500;
-    z-index: 3;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    white-space: nowrap;
+    flex-shrink: 0; /* Prevent button from shrinking */
+    position: absolute;
+    right: 10px;
+    z-index: 5;
+    width: 36px; /* Fixed width for icon only */
+    height: 36px; /* Fixed height for icon only */
 }
 
 .filter-toggle:hover {
@@ -259,6 +113,11 @@
     transform: rotate(180deg);
 }
 
+/* Hide text in toggle button */
+.filter-toggle .toggle-text {
+    display: none;
+}
+
 /* Standard Accordion Animation - Responsive */
 .collapsible-rows {
     max-height: 400px;
@@ -271,8 +130,6 @@
     transition: max-height 0.2s ease-in;
 }
 
-
-
 /* Utility Classes */
 .clearfix::after {
     content: "";
@@ -282,7 +139,7 @@
 
 /* First Filter Row Spacing */
 .filter-row:first-child {
-    padding-right: 80px; /* Make space for the toggle button */
+    padding-right: 50px; /* Make space for toggle button */
 }
 
 /* Responsive Adjustments */
@@ -300,6 +157,9 @@
 
     .filter-toggle {
         font-size: 12px;
+        padding: 4px 10px;
+        width: 32px; /* Smaller width for mobile */
+        height: 32px; /* Smaller height for mobile */
     }
 
     .filter-toggle svg {
@@ -313,8 +173,6 @@
         overscroll-behavior-x: contain;
     }
 }
-
-
 
 /* Reduced motion: disable animations for users who prefer it */
 @media (prefers-reduced-motion: reduce) {

@@ -78,12 +78,6 @@ $myPageUrl='vod/show';
             <div class="responsive-center">
                <div class="parent-category">
                   <section class="category-filter">
-                     <button class="filter-toggle" aria-label="Toggle filters">
-                        <span class="toggle-text">收起</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                           <polyline points="18 15 12 9 6 15"></polyline>
-                        </svg>
-                     </button>
                      <dl class="filter-row clearfix">
                         <dt><span>频道</span></dt>
                         <dd class="filter-slider filter-nav">
@@ -93,6 +87,11 @@ $myPageUrl='vod/show';
                               {/maccms:type}
                            </div>
                         </dd>
+                        <button class="filter-toggle" aria-label="Toggle filters">
+                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <polyline points="18 15 12 9 6 15"></polyline>
+                           </svg>
+                        </button>
                      </dl>
                      <div class="collapsible-rows">
                      {if !empty($parent_obj.type_id)}
@@ -226,14 +225,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Get elements
     const filterToggle = document.querySelector('.filter-toggle');
     const collapsibleRows = document.querySelector('.collapsible-rows');
-    const toggleText = filterToggle.querySelector('.toggle-text');
     
-    if (filterToggle && collapsibleRows && toggleText) {
+    if (filterToggle && collapsibleRows) {
         // Function to update toggle state
         function updateToggleState(isCollapsed) {
             collapsibleRows.classList.toggle('collapsed', isCollapsed);
             filterToggle.classList.toggle('collapsed', isCollapsed);
-            toggleText.textContent = isCollapsed ? '展开' : '收起';
             localStorage.setItem('filterCollapsed', isCollapsed);
         }
 

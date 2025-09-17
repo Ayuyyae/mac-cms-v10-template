@@ -1,0 +1,31 @@
+/* Display utilities */
+.u-d-none { display: none !important; }
+.u-d-block { display: block !important; }
+.u-d-inline { display: inline !important; }
+.u-d-inline-block { display: inline-block !important; }
+.u-d-flex { display: flex !important; }
+.u-d-inline-flex { display: inline-flex !important; }
+.u-d-grid { display: grid !important; }
+.u-d-inline-grid { display: inline-grid !important; }
+
+/* Visibility utilities */
+.u-v-hidden { visibility: hidden !important; }
+.u-v-visible { visibility: visible !important; }
+
+/* Overflow utilities */
+.u-o-hidden { overflow: hidden !important; }
+.u-o-auto { overflow: auto !important; }
+.u-o-scroll { overflow: scroll !important; }
+.u-o-visible { overflow: visible !important; }
+
+/* Float utilities */
+.u-f-left { float: left !important; }
+.u-f-right { float: right !important; }
+.u-f-none { float: none !important; }
+
+/* Position utilities */
+.u-pos-static { position: static !important; }
+.u-pos-relative { position: relative !important; }
+.u-pos-absolute { position: absolute !important; }
+.u-pos-fixed { position: fixed !important; }
+.u-pos-sticky { position: sticky !important; }

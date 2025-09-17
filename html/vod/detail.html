@@ -24,7 +24,7 @@
                                 <a href="{$obj|mac_url_vod_play}" title="{$obj.vod_name}" draggable="false">
                                   <div class="lazyload-image-container">
                                     <div class="lazyload-image-skeleton skeleton"></div>
-                                    <img class="lazyload" data-src="{:mac_url_img($obj.vod_pic)}" alt="{$obj.vod_name}" draggable="false" />
+                                    <img class="lazyload" data-src="{:mac_url_img($obj.vod_pic)}" alt="{$obj.vod_name}" loading="lazy" draggable="false" />
                                  </div>
                                   <div class="detail-img-overlay"></div>
                                   <svg class="detail-img-play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
@@ -49,10 +49,10 @@
                                                     {if condition="$actor neq '' && $actor neq '未知'"}
                                                         <span class="actor-item {if condition="$key gt 5"}u-d-none{/if}">
                                                             {maccms:actor name="$actor" num="1" by="time" order="desc"}
-                                                                <a href="{$vo.actor_detail|mac_url_actor_detail}" target="_blank" draggable="false">{$vo.actor_name}</a>
+                                                                <a href="{$vo.actor_detail|mac_url_actor_detail}" target="_blank" draggable="false" class="episode-link-style">{$vo.actor_name}</a>
                                                             {/maccms:actor}
                                                             {if condition="$maccms.actor == ''"}
-                                                                <a href="{:mac_url('vod/search',['actor'=>$actor])}" target="_blank" draggable="false">{$actor|htmlspecialchars}</a>
+                                                                <a href="{:mac_url('vod/search',['actor'=>$actor])}" target="_blank" draggable="false" class="episode-link-style">{$actor|htmlspecialchars}</a>
                                                             {/if}
                                                         </span>
                                                     {/if}
@@ -79,7 +79,7 @@
                                                     {if condition="$director neq '' && $director neq '未知'"}
                                                         <span class="director-item {if condition="$key gt 5"}u-d-none{/if}">
                                                             {if condition="$maccms.director == ''"}
-                                                                <a href="{:mac_url('vod/search',['director'=>$director])}" target="_blank" draggable="false">{$director|htmlspecialchars}</a>
+                                                                <a href="{:mac_url('vod/search',['director'=>$director])}" target="_blank" draggable="false" class="episode-link-style">{$director|htmlspecialchars}</a>
                                                             {/if}
                                                         </span>
                                                     {/if}
@@ -94,11 +94,11 @@
                                     </div>
                                     
                                 <div class="detail-info-typename-remark-time">
-                                    <span class="detail-info-label">类型：</span><span class="detail-type-links"><a href="{$obj.type|mac_url_type}" draggable="false">{$obj.type.type_name}</a>{if !empty($obj.vod_class)}{maccms:foreach name=":explode(',',$obj.vod_class)"}<a href="{:mac_url_type($obj.type,['class'=>$vo],'show')}" draggable="false">{$vo}</a>{/maccms:foreach}{/if}</span></div>
+                                    <span class="detail-info-label">类型：</span><span class="detail-type-links"><a href="{$obj.type|mac_url_type}" draggable="false" class="episode-link-style">{$obj.type.type_name}</a>{if !empty($obj.vod_class)}{maccms:foreach name=":explode(',',$obj.vod_class)"}<a href="{:mac_url_type($obj.type,['class'=>$vo],'show')}" draggable="false" class="episode-link-style">{$vo}</a>{/maccms:foreach}{/if}</span></div>
                                 <div class="detail-info-typename-remark-time">
-                                    <span class="detail-info-label">地区：</span><span class="detail-area-links">{if !empty($obj.vod_area)}{maccms:foreach name=":explode(',',$obj.vod_area)"}<a href="{:mac_url_type($obj.type,['area'=>$vo],'show')}" draggable="false">{$vo}</a>{/maccms:foreach}{else/}未知{/if}</span></div>
+                                    <span class="detail-info-label">地区：</span><span class="detail-area-links">{if !empty($obj.vod_area)}{maccms:foreach name=":explode(',',$obj.vod_area)"}<a href="{:mac_url_type($obj.type,['area'=>$vo],'show')}" draggable="false" class="episode-link-style">{$vo}</a>{/maccms:foreach}{else/}未知{/if}</span></div>
                                 <div class="detail-info-typename-remark-time">
-                                    <span class="detail-info-label">年份：</span><span class="detail-year-links">{if !empty($obj.vod_year)}{maccms:foreach name=":explode(',',$obj.vod_year)"}<a href="{:mac_url_type($obj.type,['year'=>$vo],'show')}" draggable="false">{$vo}</a>{/maccms:foreach}{else/}未知{/if}</span></div>
+                                    <span class="detail-info-label">年份：</span><span class="detail-year-links">{if !empty($obj.vod_year)}{maccms:foreach name=":explode(',',$obj.vod_year)"}<a href="{:mac_url_type($obj.type,['year'=>$vo],'show')}" draggable="false" class="episode-link-style">{$vo}</a>{/maccms:foreach}{else/}未知{/if}</span></div>
                                 <div class="detail-info-typename-remark-time">
                                     <span class="detail-info-label">更新：</span>{$obj.vod_time|mac_day}</div>
                                 <a href="{$obj|mac_url_vod_play}" title="{$obj.vod_name}" class="detail-play-button" draggable="false">

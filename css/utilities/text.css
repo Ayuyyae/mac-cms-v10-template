@@ -1,0 +1,62 @@
+/* Text utilities */
+.u-text-left { text-align: left !important; }
+.u-text-center { text-align: center !important; }
+.u-text-right { text-align: right !important; }
+.u-text-justify { text-align: justify !important; }
+
+/* Text transform */
+.u-text-uppercase { text-transform: uppercase !important; }
+.u-text-lowercase { text-transform: lowercase !important; }
+.u-text-capitalize { text-transform: capitalize !important; }
+.u-text-normal-case { text-transform: none !important; }
+
+/* Text decoration */
+.u-text-underline { text-decoration: underline !important; }
+.u-text-line-through { text-decoration: line-through !important; }
+.u-text-no-underline { text-decoration: none !important; }
+
+/* Font weight */
+.u-font-thin { font-weight: 100 !important; }
+.u-font-extralight { font-weight: 200 !important; }
+.u-font-light { font-weight: 300 !important; }
+.u-font-normal { font-weight: 400 !important; }
+.u-font-medium { font-weight: 500 !important; }
+.u-font-semibold { font-weight: 600 !important; }
+.u-font-bold { font-weight: 700 !important; }
+.u-font-extrabold { font-weight: 800 !important; }
+.u-font-black { font-weight: 900 !important; }
+
+/* Font style */
+.u-italic { font-style: italic !important; }
+.u-not-italic { font-style: normal !important; }
+
+/* Text color */
+.u-text-current { color: currentColor !important; }
+.u-text-transparent { color: transparent !important; }
+.u-text-black { color: #000 !important; }
+.u-text-white { color: #fff !important; }
+.u-text-gray-100 { color: #f7fafc !important; }
+.u-text-gray-200 { color: #edf2f7 !important; }
+.u-text-gray-300 { color: #e2e8f0 !important; }
+.u-text-gray-400 { color: #cbd5e0 !important; }
+.u-text-gray-500 { color: #a0aec0 !important; }
+.u-text-gray-600 { color: #718096 !important; }
+.u-text-gray-700 { color: #4a5568 !important; }
+.u-text-gray-800 { color: #2d3748 !important; }
+.u-text-gray-900 { color: #1a202c !important; }
+
+/* Letter spacing */
+.u-tracking-tighter { letter-spacing: -0.05em !important; }
+.u-tracking-tight { letter-spacing: -0.025em !important; }
+.u-tracking-normal { letter-spacing: 0 !important; }
+.u-tracking-wide { letter-spacing: 0.025em !important; }
+.u-tracking-wider { letter-spacing: 0.05em !important; }
+.u-tracking-widest { letter-spacing: 0.1em !important; }
+
+/* Line height */
+.u-leading-none { line-height: 1 !important; }
+.u-leading-tight { line-height: 1.25 !important; }
+.u-leading-snug { line-height: 1.375 !important; }
+.u-leading-normal { line-height: 1.5 !important; }
+.u-leading-relaxed { line-height: 1.625 !important; }
+.u-leading-loose { line-height: 2 !important; }

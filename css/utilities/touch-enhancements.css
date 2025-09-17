@@ -1,0 +1,76 @@
+/* Touch Enhancements Utility Classes */
+
+/* Touch-friendly button styles for elements that need larger touch targets */
+.u-touch-button {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.1s ease, background-color 0.3s ease;
+}
+
+.u-touch-button:active {
+  transform: scale(0.95);
+}
+
+/* Touch-friendly form elements */
+.u-touch-input {
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.u-touch-select {
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Touch-friendly navigation elements */
+.u-touch-nav-item {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 8px 12px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+/* Larger touch targets for important actions */
+.u-touch-important {
+  min-height: 48px;
+  min-width: 48px;
+  padding: 12px 16px;
+  border-radius: 8px;
+}
+
+/* Media query for touch devices */
+@media (hover: none) and (pointer: coarse) {
+  /* Touch-friendly focus states */
+  .u-touch-focus:focus {
+    outline: 2px solid var(--theme-color);
+    outline-offset: 2px;
+  }
+  
+  /* Increase spacing between interactive elements on touch devices */
+  .u-touch-spacing {
+    margin: 6px;
+  }
+}
+
+/* Media query for devices that support hover */
+@media (hover: hover) and (pointer: fine) {
+  .u-touch-button:hover {
+    background-color: rgb(255 128 50 / 10%);
+  }
+  
+  .u-touch-nav-item:hover {
+    background-color: rgb(255 128 50 / 10%);
+  }
+}

@@ -1,6 +1,6 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     // Function to show tooltip
-    function showTooltip(element, message) {
+    const showTooltip = (element, message) => {
         const tooltip = document.createElement('div');
         tooltip.textContent = message;
         tooltip.style.position = 'absolute';
@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Position the tooltip
         const rect = element.getBoundingClientRect();
-        tooltip.style.left = rect.left + window.scrollX + (rect.width / 2) - (tooltip.offsetWidth / 2) + 'px';
-        tooltip.style.top = rect.top + window.scrollY - tooltip.offsetHeight - 10 + 'px';
+        tooltip.style.left = `${rect.left + window.scrollX + (rect.width / 2) - (tooltip.offsetWidth / 2)}px`;
+        tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight - 10}px`;
 
         // Show the tooltip
         requestAnimationFrame(() => {
@@ -34,15 +34,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.body.removeChild(tooltip);
             });
         }, 1000);
-    }
+    };
 
     // Add event listeners to disabled links
     const ewaveMsg = document.querySelectorAll('.no-page-msg');
     ewaveMsg.forEach(element => {
-        element.addEventListener('click', function(e) {
-            if (this.classList.contains('disabled')) {
+        element.addEventListener('click', (e) => {
+            if (element.classList.contains('disabled')) {
                 e.preventDefault();
-                showTooltip(this, this.getAttribute('data-tip'));
+                showTooltip(element, element.getAttribute('data-tip'));
             }
         });
     });

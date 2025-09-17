@@ -1,6 +1,6 @@
 let isReversed = false;
 
-function toggleOrderAndFlip() {
+const toggleOrderAndFlip = () => {
     const episodeList = document.getElementById('episodeList');
     const episodes = Array.from(episodeList.children);
     const icon = document.getElementById('orderIcon');
@@ -21,12 +21,12 @@ function toggleOrderAndFlip() {
     // Clear and refill the episode list
     episodeList.innerHTML = '';
     episodes.forEach(episode => episodeList.appendChild(episode));
-}
+};
 
 // Natural sort comparison function
-function naturalCompare(a, b) {
+const naturalCompare = (a, b) => {
     return a.localeCompare(b, undefined, {numeric: true, sensitivity: 'base'});
-}
+};
 
 // Initialize the order on page load
 document.addEventListener('DOMContentLoaded', () => {

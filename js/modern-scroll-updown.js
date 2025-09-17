@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
         'use strict';
     
         // Create the buttons
@@ -22,26 +22,26 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(scrollBottomButton);
     
         // Function to scroll to top
-        function scrollToTop() {
+        const scrollToTop = () => {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             });
-        }
+        };
     
         // Function to scroll to bottom
-        function scrollToBottom() {
+        const scrollToBottom = () => {
             window.scrollTo({
                 top: document.documentElement.scrollHeight,
                 behavior: 'smooth'
             });
-        }
+        };
     
         // Event listeners for click and keyboard
         scrollTopButton.addEventListener("click", scrollToTop);
         scrollBottomButton.addEventListener("click", scrollToBottom);
     
-        document.addEventListener("keydown", function(e) {
+        document.addEventListener("keydown", (e) => {
             if (e.ctrlKey && e.key === "Home") {
                 e.preventDefault();
                 scrollToTop();
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     
         // Update button styles based on scroll position
-        function updateButtons() {
+        const updateButtons = () => {
             const scrollPosition = window.pageYOffset;
             const windowHeight = window.innerHeight;
             const documentHeight = document.documentElement.scrollHeight;
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 scrollTopButton.classList.remove('active');
                 scrollBottomButton.classList.remove('active');
             }
-        }
+        };
     
         // Initial update and event listeners
         updateButtons();

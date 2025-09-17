@@ -5,7 +5,7 @@ const layers = [
     { count: 50, size: 3, speed: 150 }
   ];
   
-  function createStarryBackground() {
+  const createStarryBackground = () => {
     const starContainer = document.createDocumentFragment();
   
     layers.forEach(({ count, size, speed }) => {
@@ -26,9 +26,9 @@ const layers = [
     });
   
     document.body.appendChild(starContainer);
-  }
+  };
   
-  function updateStarPositions() {
+  const updateStarPositions = () => {
     document.querySelectorAll('.star-layer').forEach(starLayer => {
       const layer = layers.find(layer => 
         parseFloat(starLayer.style.width) === layer.size);
@@ -43,7 +43,7 @@ const layers = [
         starLayer.style.boxShadow = boxShadow;
       }
     });
-  }
+  };
   
   // 监听页面加载事件，创建星空背景
   window.addEventListener('load', createStarryBackground);

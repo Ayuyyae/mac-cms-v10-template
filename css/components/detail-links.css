@@ -7,18 +7,18 @@
 .detail-year-links a,
 .show-more-btn {
     display: inline-block;
-    color: var(--text-color);
+    background-color: var(--episode-bg); /* Use episode background for semi-transparent look */
+    color: var(--episode-text); /* Use episode text color */
     text-decoration: none;
     margin: 0 8px 8px 0;
     padding: 4px 10px;
-    border-radius: 16px;
-    background-color: var(--card-bg);
-    transition: all 0.3s ease;
+    border-radius: 5px; /* Match episode border radius */
+    transition: all 0.3s ease, background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease; /* Match episode transitions */
     font-size: 0.9em;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Match episode box shadow */
 }
 
-/* Hover effect for all detail links and buttons */
+/* Hover effect for all detail links and buttons - match episode hover */
 .detail-actor-links a:hover,
 .detail-director-links a:hover,
 .detail-type-links a:hover,
@@ -26,12 +26,12 @@
 .detail-year-links a:hover,
 .show-more-btn:hover {
     background-color: var(--theme-color);
-    color: var(--detail-play-button-text);
+    color: var(--light-episode-text); /* Use light episode text for consistency */
     transform: scale(1.05);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Active state for all detail links and buttons */
+/* Active state for all detail links and buttons - match episode active state */
 .detail-actor-links a:active,
 .detail-director-links a:active,
 .detail-type-links a:active,

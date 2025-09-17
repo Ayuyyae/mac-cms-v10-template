@@ -61,7 +61,7 @@
                           <a href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}" draggable="false">
                              <div class="lazyload-image-container">
                                 <div class="lazyload-image-skeleton skeleton"></div>
-                                <img data-src="{$vo.vod_pic}" alt="{$vo.vod_name}" class="lazyload" draggable="false">
+                                <img data-src="{$vo.vod_pic}" alt="{$vo.vod_name}" class="lazyload" loading="lazy" draggable="false">
                              </div>
                              <div class="show-name">{$vo.vod_name}</div>
                              <div class="overlay">

@@ -1,16 +1,16 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     const navbarToggle = document.querySelector('.navbar-toggle');
     const navbarMenu = document.querySelector('.stui-header__menu');
     const navbarOverlay = document.querySelector('.navbar-overlay');
 
-    function closeMenu() {
+    const closeMenu = () => {
         navbarToggle.setAttribute('aria-expanded', 'false');
         navbarMenu.classList.remove('active');
         navbarOverlay.classList.remove('active');
         document.body.classList.remove('menu-open');
-    }
+    };
 
-    function closeAllMenus() {
+    const closeAllMenus = () => {
         document.querySelectorAll('.navbar-item').forEach(item => {
             const link = item.querySelector('.navbar-link');
             const dropdown = item.querySelector('.navbar-dropdown');
@@ -20,9 +20,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdown.style.maxHeight = null;
             }
         });
-    }
+    };
 
-    function toggleMenu() {
+    const toggleMenu = () => {
         const isExpanded = navbarToggle.getAttribute('aria-expanded') === 'true';
         navbarToggle.setAttribute('aria-expanded', !isExpanded);
         navbarMenu.classList.toggle('active');
@@ -33,22 +33,22 @@ document.addEventListener('DOMContentLoaded', function() {
             // Instead of closing all menus, we'll open the active one
             openActiveMenu();
         }
-    }
+    };
 
-    function openActiveMenu() {
+    const openActiveMenu = () => {
         const activeItem = document.querySelector('.navbar-item.active');
         if (activeItem) {
             const dropdown = activeItem.querySelector('.navbar-dropdown');
             if (dropdown) {
-                dropdown.style.maxHeight = dropdown.scrollHeight + "px";
+                dropdown.style.maxHeight = `${dropdown.scrollHeight}px`;
             }
         }
-    }
+    };
 
     navbarToggle.addEventListener('click', toggleMenu);
     navbarOverlay.addEventListener('click', closeMenu);
 
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', (event) => {
         const isClickInsideMenu = navbarMenu.contains(event.target);
         const isClickOnToggle = navbarToggle.contains(event.target);
 
@@ -57,12 +57,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    document.querySelectorAll('.navbar-item').forEach(function(item) {
+    document.querySelectorAll('.navbar-item').forEach(item => {
         const link = item.querySelector('.navbar-link');
         const dropdown = item.querySelector('.navbar-dropdown');
 
         if (dropdown) {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', (e) => {
                 if (window.innerWidth <= 768) {
                     e.preventDefault();
                     const wasActive = item.classList.contains('active');
@@ -73,24 +73,24 @@ document.addEventListener('DOMContentLoaded', function() {
                     // If this item wasn't active before, open it
                     if (!wasActive) {
                         item.classList.add('active');
-                        this.classList.add('active');
-                        dropdown.style.maxHeight = dropdown.scrollHeight + "px";
+                        link.classList.add('active');
+                        dropdown.style.maxHeight = `${dropdown.scrollHeight}px`;
                     }
                 }
             });
 
-            dropdown.querySelectorAll('a').forEach(function(secondaryLink) {
-                secondaryLink.addEventListener('click', function(e) {
+            dropdown.querySelectorAll('a').forEach(secondaryLink => {
+                secondaryLink.addEventListener('click', (e) => {
                     if (window.innerWidth <= 768) {
                         dropdown.querySelectorAll('a').forEach(link => link.classList.remove('active'));
-                        this.classList.add('active');
+                        secondaryLink.classList.add('active');
                         setTimeout(closeMenu, 300);
                     }
                 });
             });
         } else if (link) {
             // For top-level items without dropdowns
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', (e) => {
                 if (window.innerWidth <= 768) {
                     closeAllMenus(); // Close any open menus
                     setTimeout(closeMenu, 300);
@@ -100,16 +100,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Desktop hover functionality
         if (window.innerWidth > 768) {
-            item.addEventListener('mouseenter', function() {
+            item.addEventListener('mouseenter', () => {
                 if (dropdown) dropdown.style.display = 'block';
             });
-            item.addEventListener('mouseleave', function() {
+            item.addEventListener('mouseleave', () => {
                 if (dropdown) dropdown.style.display = 'none';
             });
         }
     });
 
-    function highlightCurrentPage() {
+    const highlightCurrentPage = () => {
         const currentPath = window.location.pathname;
         document.querySelectorAll('.navbar-item a').forEach(link => {
             if (link.getAttribute('href') === currentPath) {
@@ -122,12 +122,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         // After highlighting, open the active menu
         openActiveMenu();
-    }
+    };
 
     highlightCurrentPage();
 
     // Ensure the highlighted menu stays open when toggling the menu
-    navbarToggle.addEventListener('click', function() {
+    navbarToggle.addEventListener('click', () => {
         if (navbarMenu.classList.contains('active')) {
             setTimeout(openActiveMenu, 0);
         }
