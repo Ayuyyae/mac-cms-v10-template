@@ -64,6 +64,15 @@
   }
 }
 
+/* Touch-friendly content items */
+.u-touch-content-item {
+  transition: transform 0.2s ease;
+}
+
+.u-touch-content-item:active {
+  transform: scale(0.95);
+}
+
 /* Media query for devices that support hover */
 @media (hover: hover) and (pointer: fine) {
   .u-touch-button:hover {
