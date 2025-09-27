@@ -23,8 +23,8 @@ class ModernCategoryFilter {
         
         if (!toggle || !collapsible) return;
 
-        // Get saved state or default to expanded
-        const isCollapsed = localStorage.getItem('filterCollapsed') === 'true';
+        // Get saved state or default to collapsed (closed)
+        const isCollapsed = localStorage.getItem('filterCollapsed') !== 'false';
         this.updateToggleState(toggle, collapsible, isCollapsed);
 
         toggle.addEventListener('click', (e) => {
@@ -165,38 +165,63 @@ class ModernCategoryFilter {
                 }
             });
 
-            // Touch events for mobile - Native feel implementation
+            // Touch events for mobile - Smart directional scrolling
             let touchStartX = 0;
+            let touchStartY = 0;
             let touchScrollLeft = 0;
             let isTouchDragging = false;
             let touchStartTime = 0;
+            let scrollDirection = null; // 'horizontal', 'vertical', or null
+            let touchMoved = false;
 
             container.addEventListener('touchstart', (e) => {
                 const touch = e.touches[0];
                 touchStartX = touch.clientX;
+                touchStartY = touch.clientY;
                 touchScrollLeft = container.scrollLeft;
                 touchStartTime = Date.now();
                 isTouchDragging = false;
+                touchMoved = false;
+                scrollDirection = null;
                 container.style.scrollBehavior = 'unset';
             }, { passive: true });
 
             container.addEventListener('touchmove', (e) => {
                 const touch = e.touches[0];
                 const deltaX = touchStartX - touch.clientX;
+                const deltaY = touchStartY - touch.clientY;
                 
-                // Professional touch scrolling - direct mapping
-                container.scrollLeft = touchScrollLeft + deltaX;
-                
-                if (Math.abs(deltaX) > 10) {
-                    isTouchDragging = true;
+                // Determine scroll direction on first significant movement
+                if (!touchMoved && (Math.abs(deltaX) > 5 || Math.abs(deltaY) > 5)) {
+                    touchMoved = true;
+                    
+                    // Determine primary scroll direction
+                    if (Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
+                        // Horizontal scroll intended
+                        scrollDirection = 'horizontal';
+                    } else if (Math.abs(deltaY) > Math.abs(deltaX) * 1.5) {
+                        // Vertical scroll intended - let browser handle it
+                        scrollDirection = 'vertical';
+                    }
                 }
+                
+                // Only handle horizontal scrolling if user intended horizontal movement
+                if (scrollDirection === 'horizontal') {
+                    // Professional touch scrolling - direct mapping
+                    container.scrollLeft = touchScrollLeft + deltaX;
+                    
+                    if (Math.abs(deltaX) > 10) {
+                        isTouchDragging = true;
+                    }
+                }
+                // For vertical or ambiguous movements, let the browser handle page scrolling
             }, { passive: true });
 
             container.addEventListener('touchend', (e) => {
                 container.style.scrollBehavior = 'smooth';
                 
-                // Handle tap vs drag
-                if (!isTouchDragging && e.changedTouches && Date.now() - touchStartTime < 300) {
+                // Handle tap vs drag (only if not vertical scrolling)
+                if (!isTouchDragging && scrollDirection !== 'vertical' && e.changedTouches && Date.now() - touchStartTime < 300) {
                     const touch = e.changedTouches[0];
                     const target = document.elementFromPoint(touch.clientX, touch.clientY);
                     const pill = target.closest('.filter-pill-modern');
@@ -208,7 +233,10 @@ class ModernCategoryFilter {
                     }
                 }
                 
+                // Reset state
                 isTouchDragging = false;
+                touchMoved = false;
+                scrollDirection = null;
             }, { passive: true });
 
             // Prevent context menu during scroll

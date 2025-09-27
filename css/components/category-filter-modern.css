@@ -79,8 +79,8 @@
     -webkit-transform: translateZ(0);
     will-change: scroll-position;
     
-    /* Professional touch scrolling - 跟手 */
-    touch-action: pan-x;
+    /* Professional touch scrolling - Smart directional handling */
+    touch-action: manipulation;
 }
 
 .filter-options-modern:active {
