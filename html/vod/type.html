@@ -100,10 +100,9 @@ $myPageUrl='vod/show';
 
                      <!-- Collapsible Filters -->
                      <div class="collapsible-filters collapsible-filters-modern">{if !empty($parent_obj.type_id)}
-                        <div class="filter-section-modern">
-                           <div class="filter-header-modern">
-                              <span class="filter-label-modern">分类</span>
-                           </div>
+                        <!-- Category Filter - Inline Layout -->
+                        <div class="filter-row-inline">
+                           <span class="filter-label-modern">分类</span>
                            <div class="filter-options-modern">
                               <a href="{:mac_url_type($parent_obj,[],'show')}" 
                                  class="filter-pill-modern{if $parent_obj.type_id==$obj.type_id} selected{/if}">
@@ -120,11 +119,9 @@ $myPageUrl='vod/show';
                         {/if}
                         
                         {if !empty($areaArray)}
-                        <!-- Area Filter -->
-                        <div class="filter-section-modern">
-                           <div class="filter-header-modern">
-                              <span class="filter-label-modern">地区</span>
-                           </div>
+                        <!-- Area Filter - Inline Layout -->
+                        <div class="filter-row-inline">
+                           <span class="filter-label-modern">地区</span>
                            <div class="filter-options-modern">
                               <a href="{:mac_url_type($obj,['class'=>$param.class,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
                                  class="filter-pill-modern{if empty($param.area)} selected{/if}">
@@ -141,11 +138,9 @@ $myPageUrl='vod/show';
                         {/if}
                         
                         {if !empty($classArray)}
-                        <!-- Class Filter -->
-                        <div class="filter-section-modern">
-                           <div class="filter-header-modern">
-                              <span class="filter-label-modern">剧情</span>
-                           </div>
+                        <!-- Class Filter - Inline Layout -->
+                        <div class="filter-row-inline">
+                           <span class="filter-label-modern">剧情</span>
                            <div class="filter-options-modern">
                               <a href="{:mac_url_type($obj,['area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
                                  class="filter-pill-modern{if empty($param.class)} selected{/if}">
@@ -162,11 +157,9 @@ $myPageUrl='vod/show';
                         {/if}
                         
                         {if !empty($langArray)}
-                        <!-- Language Filter -->
-                        <div class="filter-section-modern">
-                           <div class="filter-header-modern">
-                              <span class="filter-label-modern">语言</span>
-                           </div>
+                        <!-- Language Filter - Inline Layout -->
+                        <div class="filter-row-inline">
+                           <span class="filter-label-modern">语言</span>
                            <div class="filter-options-modern">
                               <a href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
                                  class="filter-pill-modern{if empty($param.lang)} selected{/if}">
@@ -183,11 +176,9 @@ $myPageUrl='vod/show';
                         {/if}
                         
                         {if !empty($yearArray)}
-                        <!-- Year Filter -->
-                        <div class="filter-section-modern">
-                           <div class="filter-header-modern">
-                              <span class="filter-label-modern">年份</span>
-                           </div>
+                        <!-- Year Filter - Inline Layout -->
+                        <div class="filter-row-inline">
+                           <span class="filter-label-modern">年份</span>
                            <div class="filter-options-modern">
                               <a href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
                                  class="filter-pill-modern{if empty($param.year)} selected{/if}">
@@ -204,11 +195,9 @@ $myPageUrl='vod/show';
                         {/if}
                         
                         {if !empty($letterArray)}
-                        <!-- Letter Filter -->
-                        <div class="filter-section-modern">
-                           <div class="filter-header-modern">
-                              <span class="filter-label-modern">字母</span>
-                           </div>
+                        <!-- Letter Filter - Inline Layout -->
+                        <div class="filter-row-inline">
+                           <span class="filter-label-modern">字母</span>
                            <div class="filter-options-modern">
                               <a href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'by'=>$param.by],'show')}" 
                                  class="filter-pill-modern{if empty($param.letter)} selected{/if}">
@@ -224,11 +213,9 @@ $myPageUrl='vod/show';
                         </div>
                         {/if}
                         
-                        <!-- Sort Filter -->
-                        <div class="filter-section-modern">
-                           <div class="filter-header-modern">
-                              <span class="filter-label-modern">排序</span>
-                           </div>
+                        <!-- Sort Filter - Inline Layout -->
+                        <div class="filter-row-inline">
+                           <span class="filter-label-modern">排序</span>
                            <div class="filter-options-modern">
                               <a href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>'time'],'show')}" 
                                  class="filter-pill-modern{if $param.by=='time'||empty($param.by)} selected{/if}">

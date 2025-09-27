@@ -83,6 +83,39 @@
     touch-action: manipulation;
 }
 
+/* 🚀 INLINE FILTER ROW LAYOUT - Compact and Modern */
+.filter-row-inline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: nowrap;
+    padding: 4px 0; /* Add vertical padding to prevent clipping */
+    min-height: 44px; /* Ensure minimum height for touch targets */
+}
+
+.filter-row-inline .filter-label-modern {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 40px;
+    padding: 4px 8px 4px 0; /* Add padding around label */
+    display: flex;
+    align-items: center;
+    min-height: 36px; /* Ensure label height matches pills */
+}
+
+.filter-row-inline .filter-options-modern {
+    flex: 1;
+    margin-bottom: 0;
+    padding: 6px 0; /* Slightly more padding than default for better spacing */
+    min-width: 0; /* Allow shrinking */
+    display: flex;
+    align-items: center;
+}
+
 .filter-options-modern:active {
     cursor: grabbing;
 }
@@ -199,6 +232,25 @@
         -webkit-overflow-scrolling: touch;
         scroll-behavior: auto; /* Native iOS momentum scrolling */
     }
+    
+    /* Mobile adjustments for inline rows */
+    .filter-row-inline {
+        gap: 10px;
+        margin-bottom: 14px;
+        padding: 6px 0; /* Slightly more padding on mobile */
+        min-height: 48px; /* Larger touch targets on mobile */
+    }
+    
+    .filter-row-inline .filter-label-modern {
+        font-size: 13px;
+        min-width: 35px;
+        padding: 6px 6px 6px 0; /* Adjusted mobile padding */
+        min-height: 40px; /* Match mobile pill height */
+    }
+    
+    .filter-row-inline .filter-options-modern {
+        padding: 6px 0; /* Match mobile row padding */
+    }
 }
 
 /* 🌙 COMPREHENSIVE LIGHT/DARK THEME SUPPORT */
@@ -279,7 +331,9 @@ body.light-theme .filter-toggle-modern:hover {
 }
 
 .light-theme .filter-label-modern,
-body.light-theme .filter-label-modern {
+body.light-theme .filter-label-modern,
+.light-theme .filter-row-inline .filter-label-modern,
+body.light-theme .filter-row-inline .filter-label-modern {
     color: var(--text-color, #333333);
 }
 
