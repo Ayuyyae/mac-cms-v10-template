@@ -41,18 +41,39 @@ class ModernCategoryFilter {
         collapsible.classList.toggle('collapsed', collapsed);
         
         if (collapsed) {
-            collapsible.style.maxHeight = '0px';
-        } else {
-            // Calculate and set the actual height for smooth animation
+            // Closing: Set explicit height first, then animate to 0
             const height = collapsible.scrollHeight;
             collapsible.style.maxHeight = height + 'px';
             
-            // Set back to none after animation completes for better performance
+            // Force reflow to ensure height is applied
+            collapsible.offsetHeight;
+            
+            // Then animate to closed
+            requestAnimationFrame(() => {
+                collapsible.style.maxHeight = '0px';
+            });
+        } else {
+            // Opening: Remove any explicit height and let CSS handle it
+            collapsible.style.maxHeight = '';
+            
+            // Calculate the natural height for smooth animation
+            const height = collapsible.scrollHeight;
+            collapsible.style.maxHeight = '0px';
+            
+            // Force reflow
+            collapsible.offsetHeight;
+            
+            // Animate to full height
+            requestAnimationFrame(() => {
+                collapsible.style.maxHeight = height + 'px';
+            });
+            
+            // Clean up after animation completes
             setTimeout(() => {
                 if (!collapsible.classList.contains('collapsed')) {
-                    collapsible.style.maxHeight = 'none';
+                    collapsible.style.maxHeight = '';
                 }
-            }, 300);
+            }, 320); // Slightly longer than CSS transition for safety
         }
     }
 

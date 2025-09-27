@@ -54,7 +54,7 @@
 .filter-toggle-modern svg {
     width: 16px;
     height: 16px;
-    transition: transform 0.2s ease;
+    transition: transform 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     pointer-events: none;
 }
 
@@ -198,18 +198,24 @@
     box-shadow: 0 0 0 2px rgba(255, 128, 50, 0.3);
 }
 
-/* 📱 COLLAPSIBLE FUNCTIONALITY */
+/* 📱 COLLAPSIBLE FUNCTIONALITY - Perfectly Synchronized Animation */
 .collapsible-filters,
 .collapsible-filters-modern {
     overflow: hidden;
-    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    max-height: 1000px; /* Large default value */
+    transition: 
+        max-height 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        opacity 0.24s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.08s; /* Slight delay for smooth reveal */
+    max-height: 1000px; /* Large default value for open state */
+    opacity: 1;
 }
 
 .collapsible-filters.collapsed,
 .collapsible-filters-modern.collapsed {
     max-height: 0;
-    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transition: 
+        max-height 0.28s cubic-bezier(0.55, 0.085, 0.68, 0.53),
+        opacity 0.20s cubic-bezier(0.55, 0.085, 0.68, 0.53); /* No delay - fade immediately with height */
 }
 
 /* 🎯 MOBILE RESPONSIVE */
