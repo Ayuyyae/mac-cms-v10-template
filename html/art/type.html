@@ -1,48 +1,366 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>{$obj.type_title} - {$maccms.site_name}</title>
-    <meta name="keywords" content="{$obj.type_key}" />
-    <meta name="description" content="{$obj.type_des}" />
-    {include file="public/include"}
-</head>
-<body>
-{include file="public/head"}
-<!--当前位置-->
-<div class="bread-crumb-nav fn-clear">
-    <ul class="bread-crumbs">
-        <li class="home"><a href="{$maccms.path}">首页</a></li>
-        <li><a href="{:mac_url_type($obj)}">{$obj.type_name}</a></li>
-        <li class="back"><a href="javascript:MAC.GoBack()">返回上一页</a></li>
-    </ul>
-</div>
-<!--文章列表-->
-<div class="wenzhang">
-    <div class="vodlist_l">
-        <ul class="pianyi">
-            {maccms:art num="30" paging="yes" type="current" order="desc" by="time"}
-            <li><span>{$vo.art_time|date='Y-m-d',###}</span><a href="{:mac_url_art_detail($vo)}">{$vo.art_name}</a></li>
-            {/maccms:art}
-        </ul>
+{php}
+if(!empty($obj['type_extend']['class'])) {
+$classArray=explode(',',$obj['type_extend']['class']);
+}elseif(!empty($obj['parent']['type_extend']['class'])){
+$classArray=explode(',',$obj['parent']['type_extend']['class']);
+}else{
+$classArray=explode(',',$GLOBALS['config']['app']['vod_extend_class']);
+}
+if(!empty($obj['type_extend']['area'])) {
+$areaArray=explode(',',$obj['type_extend']['area']);
+}elseif(!empty($obj['parent']['type_extend']['area'])){
+$areaArray=explode(',',$obj['parent']['type_extend']['area']);
+}else{
+$areaArray=explode(',',$GLOBALS['config']['app']['vod_extend_area']);
+}
+if(!empty($obj['type_extend']['year'])) {
+$yearArray=explode(',',$obj['type_extend']['year']);
+}elseif(!empty($obj['parent']['type_extend']['year'])){
+$yearArray=explode(',',$obj['parent']['type_extend']['year']);
+}else{
+$yearArray=explode(',',$GLOBALS['config']['app']['vod_extend_year']);
+}
 
-        {include file="public/paging"}
+if(!empty($obj['type_extend']['lang'])) {
+$langArray=explode(',',$obj['type_extend']['lang']);
+}elseif(!empty($obj['parent']['type_extend']['lang'])){
+$langArray=explode(',',$obj['parent']['type_extend']['lang']);
+}else{
+$langArray=explode(',',$GLOBALS['config']['app']['vod_extend_lang']);
+}
+if(!empty($obj['type_extend']['version'])) {
+$versionArray=explode(',',$obj['type_extend']['version']);
+}elseif(!empty($obj['parent']['type_extend']['version'])){
+$versionArray=explode(',',$obj['parent']['type_extend']['version']);
+}else{
+$versionArray=explode(',',$GLOBALS['config']['app']['vod_extend_version']);
+}
+if(!empty($obj['type_extend']['state'])) {
+$stateArray=explode(',',$obj['type_extend']['state']);
+}elseif(!empty($obj['parent']['type_extend']['state'])){
+$stateArray=explode(',',$obj['parent']['type_extend']['state']);
+}else{
+$stateArray=explode(',',$GLOBALS['config']['app']['vod_extend_state']);
+}
+$letterArray=explode(',','A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z');
+if(!empty($obj['childids'])){
+$parent_obj=$obj;
+}elseif(!empty($obj['parent'])){
+$parent_obj=$obj['parent'];
+}
+{/php}
+{php}
+if($maccms['aid']==11){
+$myPageUrl='vod/type';
+}elseif($maccms['aid']==12){
+$myPageUrl='vod/show';
+}
+{/php}
+<!DOCTYPE html>
+<html lang="zh-CN">
+   <head>
+      <meta charset="utf-8">
+      <title>{$obj.type_title} - 第{$param.page}页 - {$maccms.site_name}</title>
+      <meta name="keywords" content="{$obj.type_key}">
+      <meta name="description" content="{$obj.type_des}">
+      <meta name="renderer" content="webkit|ie-comp|ie-stand">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   {include file="public/include"}
+   {include file="public/head"}
+   </head>
+   <body>
+      <main class="layoutMain">
+         <div class="responsive">
+            <div class="responsive-left">
+               <!-- Add content for left sidebar if needed -->
+            </div>
+            <div class="responsive-center">
+               <div class="parent-category">
+                  <!-- Modern Category Filter -->
+                  <section class="category-filter-modern" aria-label="Content filters">
+                     <!-- Channel Filter -->
+                     <div class="filter-section" data-filter-type="channel">
+                        <div class="filter-header">
+                           <h3 class="filter-label">频道</h3>
+                           <!-- Toggle Button - positioned next to title -->
+                           <button class="filter-toggle-modern" aria-label="Toggle additional filters">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                 <polyline points="18 15 12 9 6 15"></polyline>
+                              </svg>
+                           </button>
+                        </div>
+                        <div class="filter-options" role="group" aria-label="Channel options">
+                           {maccms:type ids="parent" flag="vod" by="sort" order="asc"}
+                           <a class="filter-pill{if $vo.type_id==$obj.type_id||$vo.type_id==$obj.type_pid} selected{/if}" 
+                              href="{:mac_url_type($vo,[],'show')}" 
+                              data-filter-value="{$vo.type_id}"
+                              role="button" 
+                              tabindex="0"
+                              draggable="false"
+                              aria-pressed="{if $vo.type_id==$obj.type_id||$vo.type_id==$obj.type_pid}true{else}false{/if}">
+                              {$vo.type_name}
+                           </a>
+                           {/maccms:type}
+                        </div>
+                     </div>
 
-    </div>
-    <div class="vodlist_r">
-        <div class="ui-ranking">
-            <h3>热点影视资讯</h3>
-            <ul class="ranking-list">
-                {maccms:art num="20" order="desc" by="hits_month"}
-                <li><span>{$vo.art_hits_month}</span><i {if condition="$key lt 4"} class="stress"{/if}>{$key}</i><a href="{:mac_url_art_detail($vo)}" title="{$vo.art_name}">{$vo.art_name}</a></li>
-                {/maccms:art}
-            </ul>
-        </div>
-    </div>
-    <div class="clear"></div>
-</div>
-
-{include file="public/foot"}
-</body>
+                     <!-- Collapsible Filters -->
+                     <div class="collapsible-filters">{if !empty($parent_obj.type_id)}
+                        <!-- Category Filter -->
+                        <div class="filter-section" data-filter-type="category">
+                           <div class="filter-header">
+                              <h3 class="filter-label">分类</h3>
+                           </div>
+                           <div class="filter-options" role="group" aria-label="Category options">
+                              <a class="filter-pill{if $parent_obj.type_id==$obj.type_id} selected{/if}" 
+                                 href="{:mac_url_type($parent_obj,[],'show')}" 
+                                 data-filter-value="all"
+                                 role="button" 
+                                 tabindex="0"
+                                 draggable="false"
+                                 aria-pressed="{if $parent_obj.type_id==$obj.type_id}true{else}false{/if}">
+                                 全部
+                              </a>
+                              {maccms:type ids="child" flag="vod" parent="'.$parent_obj['type_id'].'" by="sort" order="asc"}
+                              <a class="filter-pill{if $vo.type_id==$obj.type_id} selected{/if}" 
+                                 href="{:mac_url_type($vo,[],'show')}" 
+                                 data-filter-value="{$vo.type_id}"
+                                 role="button" 
+                                 tabindex="0"
+                                 draggable="false"
+                                 aria-pressed="{if $vo.type_id==$obj.type_id}true{else}false{/if}">
+                                 {$vo.type_name}
+                              </a>
+                              {/maccms:type}
+                           </div>
+                        </div>
+                        {/if}
+                        
+                        {if !empty($areaArray)}
+                        <!-- Area Filter -->
+                        <div class="filter-section" data-filter-type="area">
+                           <div class="filter-header">
+                              <h3 class="filter-label">地区</h3>
+                           </div>
+                           <div class="filter-options" role="group" aria-label="Area options">
+                              <a class="filter-pill{if empty($param.area)} selected{/if}" 
+                                 href="{:mac_url_type($obj,['class'=>$param.class,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
+                                 data-filter-value="all"
+                                 role="button" 
+                                 tabindex="0"
+                                 draggable="false"
+                                 aria-pressed="{if empty($param.area)}true{else}false{/if}">
+                                 全部
+                              </a>
+                              {maccms:foreach name="$areaArray"}
+                              <a class="filter-pill{if $param.area==$vo} selected{/if}" 
+                                 href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$vo,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
+                                 data-filter-value="{$vo}"
+                                 role="button" 
+                                 tabindex="0"
+                                 draggable="false"
+                                 aria-pressed="{if $param.area==$vo}true{else}false{/if}">
+                                 {$vo}
+                              </a>
+                              {/maccms:foreach}
+                           </div>
+                        </div>
+                        {/if}
+                        
+                        {if !empty($classArray)}
+                        <!-- Class Filter -->
+                        <div class="filter-section" data-filter-type="class">
+                           <div class="filter-header">
+                              <h3 class="filter-label">剧情</h3>
+                           </div>
+                           <div class="filter-options" role="group" aria-label="Genre options">
+                              <a class="filter-pill{if empty($param.class)} selected{/if}" 
+                                 href="{:mac_url_type($obj,['area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
+                                 data-filter-value="all"
+                                 role="button" 
+                                 tabindex="0"
+                                 draggable="false"
+                                 aria-pressed="{if empty($param.class)}true{else}false{/if}">
+                                 全部
+                              </a>
+                              {maccms:foreach name="$classArray"}
+                              <a class="filter-pill{if $param.class==$vo} selected{/if}" 
+                                 href="{:mac_url_type($obj,['class'=>$vo,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
+                                 data-filter-value="{$vo}"
+                                 role="button" 
+                                 tabindex="0"
+                                 draggable="false"
+                                 aria-pressed="{if $param.class==$vo}true{else}false{/if}">
+                                 {$vo}
+                              </a>
+                              {/maccms:foreach}
+                           </div>
+                        </div>
+                        {/if}
+                        
+                        {if !empty($langArray)}
+                        <!-- Language Filter -->
+                        <div class="filter-section" data-filter-type="lang">
+                           <div class="filter-header">
+                              <h3 class="filter-label">语言</h3>
+                           </div>
+                           <div class="filter-options" role="group" aria-label="Language options">
+                              <a class="filter-pill{if empty($param.lang)} selected{/if}" 
+                                 href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
+                                 data-filter-value="all"
+                                 role="button" 
+                                 tabindex="0"
+                                 draggable="false"
+                                 aria-pressed="{if empty($param.lang)}true{else}false{/if}">
+                                 全部
+                              </a>
+                              {maccms:foreach name="$langArray"}
+                              <a class="filter-pill{if $param.lang==$vo} selected{/if}" 
+                                 href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$vo,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
+                                 data-filter-value="{$vo}"
+                                 role="button" 
+                                 tabindex="0"
+                                 draggable="false"
+                                 aria-pressed="{if $param.lang==$vo}true{else}false{/if}">
+                                 {$vo}
+                              </a>
+                              {/maccms:foreach}
+                           </div>
+                        </div>
+                        {/if}
+                        
+                        {if !empty($yearArray)}
+                        <!-- Year Filter -->
+                        <div class="filter-section" data-filter-type="year">
+                           <div class="filter-header">
+                              <h3 class="filter-label">年份</h3>
+                           </div>
+                           <div class="filter-options" role="group" aria-label="Year options">
+                              <a class="filter-pill{if empty($param.year)} selected{/if}" 
+                                 href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
+                                 data-filter-value="all"
+                                 role="button" 
+                                 tabindex="0"
+                                 draggable="false"
+                                 aria-pressed="{if empty($param.year)}true{else}false{/if}">
+                                 全部
+                              </a>
+                              {maccms:foreach name="$yearArray"}
+                              <a class="filter-pill{if $param.year==$vo} selected{/if}" 
+                                 href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$vo,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
+                                 data-filter-value="{$vo}"
+                                 role="button" 
+                                 tabindex="0"
+                                 draggable="false"
+                                 aria-pressed="{if $param.year==$vo}true{else}false{/if}">
+                                 {$vo}
+                              </a>
+                              {/maccms:foreach}
+                           </div>
+                        </div>
+                        {/if}
+                        
+                        {if !empty($letterArray)}
+                        <!-- Letter Filter -->
+                        <div class="filter-section" data-filter-type="letter">
+                           <div class="filter-header">
+                              <h3 class="filter-label">字母</h3>
+                           </div>
+                           <div class="filter-options" role="group" aria-label="Letter options">
+                              <a class="filter-pill{if empty($param.letter)} selected{/if}" 
+                                 href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'by'=>$param.by],'show')}" 
+                                 data-filter-value="all"
+                                 role="button" 
+                                 tabindex="0"
+                                 draggable="false"
+                                 aria-pressed="{if empty($param.letter)}true{else}false{/if}">
+                                 全部
+                              </a>
+                              {maccms:foreach name="$letterArray"}
+                              <a class="filter-pill{if $param.letter==$vo} selected{/if}" 
+                                 href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$vo,'by'=>$param.by],'show')}" 
+                                 data-filter-value="{$vo}"
+                                 role="button" 
+                                 tabindex="0"
+                                 draggable="false"
+                                 aria-pressed="{if $param.letter==$vo}true{else}false{/if}">
+                                 {$vo}
+                              </a>
+                              {/maccms:foreach}
+                           </div>
+                        </div>
+                        {/if}
+                        
+                        <!-- Sort Filter -->
+                        <div class="filter-section" data-filter-type="sort">
+                           <div class="filter-header">
+                              <h3 class="filter-label">排序</h3>
+                           </div>
+                           <div class="filter-options" role="group" aria-label="Sort options">
+                              <a class="filter-pill{if $param.by=='time'||empty($param.by)} selected{/if}" 
+                                 href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>'time'],'show')}" 
+                                 data-filter-value="time"
+                                 role="button" 
+                                 tabindex="0"
+                                 draggable="false"
+                                 aria-pressed="{if $param.by=='time'||empty($param.by)}true{else}false{/if}">
+                                 最近更新
+                              </a>
+                              <a class="filter-pill{if $param.by=='hits'} selected{/if}" 
+                                 href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>'hits'],'show')}" 
+                                 data-filter-value="hits"
+                                 role="button" 
+                                 tabindex="0"
+                                 draggable="false"
+                                 aria-pressed="{if $param.by=='hits'}true{else}false{/if}">
+                                 最多播放
+                              </a>
+                              <a class="filter-pill{if $param.by=='score'} selected{/if}" 
+                                 href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>'score'],'show')}" 
+                                 data-filter-value="score"
+                                 role="button" 
+                                 tabindex="0"
+                                 draggable="false"
+                                 aria-pressed="{if $param.by=='score'}true{else}false{/if}">
+                                 最好评
+                              </a>
+                           </div>
+                        </div>
+                     </div>
+                  </section>
+                  
+                  <section>
+                     <div class="content-grid">
+                         {maccms:vod num="30" paging="yes" pageurl="'.$myPageUrl.'" type="current" order="desc" by="time"}
+                             <div class="content-item u-touch-content-item">
+                                 <a href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}" draggable="false">
+                                    <div class="lazyload-image-container">
+                                       <div class="lazyload-image-skeleton skeleton"></div>
+                                       <img class="lazyload" data-src="{:mac_url_img($vo.vod_pic)}" alt="{$vo.vod_name}" draggable="false">
+                                    </div>
+                                     <div class="show-name">{$vo.vod_name}</div>
+                                     <div class="overlay">
+                                         <div class="title">{$vo.vod_name}</div>
+                                         <div class="info-typename-remark-time">
+                                             <p><span>{$vo.type.type_name}</span></p>
+                                             <p>{$vo.vod_remarks} <span class="info-typename-remark-time-vod-time">{$vo.vod_time|date='Y-m-d',###}</span></p>
+                                         </div>
+                                     </div>
+                                 </a>
+                             </div>
+                         {/maccms:vod}
+                     </div>
+                 </section>
+                  {include file="public/paging"}
+               </div>
+            </div>
+            <div class="responsive-right">
+               <!-- Add content for right sidebar if needed -->
+            </div>
+         </div>
+      </main>
+      {include file="public/foot"}
+      <script src="{$maccms.path_tpl}js/modern-skeletonhider.js"></script>
+      <script src="{$maccms.path_tpl}js/modern-filter-production.js"></script>
+   </body>
 </html>
-

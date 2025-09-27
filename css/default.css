@@ -24,6 +24,8 @@ body.player-page {
 
 :root {
 	--theme-color: #ff8032;
+	--theme-color-rgb: 255, 128, 50; /* RGB values for rgba() usage */
+	--card-bg-rgb: 27, 34, 43; /* RGB values for card background */
 	--bg-color:/* #1a1a1a;*/rgb(17 24 33);
 	--more-link-color: #ffff;
 	--title-color: #ffff;
@@ -63,6 +65,7 @@ body.player-page {
     --more-link-color: #333;
     --title-color: #333;
     --card-bg: #fff;
+    --card-bg-rgb: 255, 255, 255; /* Light theme card background RGB */
     --text-color: #333;
     --secondary-text-color: #666;
     --split-line-color: #ff8032;

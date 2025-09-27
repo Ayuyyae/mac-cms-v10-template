@@ -1,0 +1,332 @@
+/* 🚀 MODERN CATEGORY FILTER - INDUSTRY STANDARD SOLUTION 
+   Based on Netflix, YouTube, Amazon Prime, and Spotify implementations 
+   Optimized for professional "跟手" scrolling experience */
+
+.category-filter-modern {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.filter-section-modern {
+    margin-bottom: 16px;
+}
+
+.filter-header-modern {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.filter-label-modern {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.filter-toggle-modern {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #ffffff;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.filter-toggle-modern:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ff8032;
+}
+
+.filter-toggle-modern.collapsed svg {
+    transform: rotate(180deg);
+}
+
+.filter-toggle-modern svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+    pointer-events: none;
+}
+
+/* 🎯 INDUSTRY-STANDARD SMOOTH SCROLL SOLUTION */
+.filter-options-modern {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 4px 0 8px 0;
+    position: relative;
+    
+    /* Professional cursor handling */
+    cursor: grab;
+    
+    /* Hardware acceleration for smooth performance */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    will-change: scroll-position;
+    
+    /* Professional touch scrolling - 跟手 */
+    touch-action: pan-x;
+}
+
+.filter-options-modern:active {
+    cursor: grabbing;
+}
+
+.filter-options-modern::-webkit-scrollbar {
+    display: none;
+}
+
+.filter-pill-modern {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    box-sizing: border-box;
+    
+    /* Prevent selection and context menu */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    
+    /* Prevent dragging */
+    draggable: false;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    
+    /* Remove native tap highlight */
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-focus-ring-color: rgba(0, 0, 0, 0);
+    outline: none;
+}
+
+.filter-pill-modern:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+}
+
+.filter-pill-modern:active {
+    background: rgba(255, 128, 50, 0.2);
+    border-color: #ff8032;
+    box-shadow: 0 0 0 2px rgba(255, 128, 50, 0.3);
+    transform: scale(0.98);
+    transition: all 0.1s ease;
+}
+
+.filter-pill-modern.selected {
+    background: #ff8032;
+    border-color: #ff8032;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.filter-pill-modern.selected:hover {
+    background: #ff8032;
+    filter: brightness(1.1);
+}
+
+.filter-pill-modern.selected:active {
+    background: #ff8032;
+    filter: brightness(0.9);
+    transform: scale(0.98);
+    box-shadow: 0 0 0 2px rgba(255, 128, 50, 0.3);
+}
+
+/* 📱 COLLAPSIBLE FUNCTIONALITY */
+.collapsible-filters,
+.collapsible-filters-modern {
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    max-height: 1000px; /* Large default value */
+}
+
+.collapsible-filters.collapsed,
+.collapsible-filters-modern.collapsed {
+    max-height: 0;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 🎯 MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+    .filter-pill-modern {
+        padding: 10px 18px;
+        min-height: 44px;
+        font-size: 14px;
+        
+        /* Enhanced mobile touch target */
+        min-width: 44px;
+    }
+    
+    .category-filter-modern {
+        padding: 16px;
+    }
+    
+    .filter-options-modern {
+        /* Better mobile scrolling */
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: auto; /* Native iOS momentum scrolling */
+    }
+}
+
+/* 🌙 COMPREHENSIVE LIGHT/DARK THEME SUPPORT */
+/* Default Dark theme styles */
+.category-filter-modern {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.filter-pill-modern {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+}
+
+.filter-pill-modern:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.filter-pill-modern:active {
+    background: rgba(255, 128, 50, 0.2);
+    border-color: #ff8032;
+    box-shadow: 0 0 0 2px rgba(255, 128, 50, 0.3);
+}
+
+.filter-toggle-modern {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+.filter-toggle-modern:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ff8032;
+}
+
+.filter-label-modern {
+    color: #ffffff;
+}
+
+/* Light theme overrides */
+.light-theme .category-filter-modern,
+body.light-theme .category-filter-modern {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.light-theme .filter-pill-modern,
+body.light-theme .filter-pill-modern {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: var(--text-color, #333333);
+}
+
+.light-theme .filter-pill-modern:hover,
+body.light-theme .filter-pill-modern:hover {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+.light-theme .filter-pill-modern:active,
+body.light-theme .filter-pill-modern:active {
+    background: rgba(255, 128, 50, 0.2);
+    border-color: #ff8032;
+    box-shadow: 0 0 0 2px rgba(255, 128, 50, 0.3);
+}
+
+.light-theme .filter-toggle-modern,
+body.light-theme .filter-toggle-modern {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: var(--text-color, #333333);
+}
+
+.light-theme .filter-toggle-modern:hover,
+body.light-theme .filter-toggle-modern:hover {
+    background: rgba(0, 0, 0, 0.08);
+    color: #ff8032;
+}
+
+.light-theme .filter-label-modern,
+body.light-theme .filter-label-modern {
+    color: var(--text-color, #333333);
+}
+
+/* Selected state works the same in both themes */
+.filter-pill-modern.selected {
+    background: #ff8032 !important;
+    border-color: #ff8032 !important;
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+.filter-pill-modern.selected:hover {
+    background: #ff8032 !important;
+    filter: brightness(1.1);
+}
+
+.filter-pill-modern.selected:active {
+    background: #ff8032 !important;
+    filter: brightness(0.9);
+    transform: scale(0.98);
+    box-shadow: 0 0 0 2px rgba(255, 128, 50, 0.3) !important;
+}
+
+/* Remove any unwanted outline or focus rings */
+.filter-pill-modern:focus,
+.filter-pill-modern:focus-visible,
+.filter-toggle-modern:focus,
+.filter-toggle-modern:focus-visible {
+    outline: none;
+    -webkit-focus-ring-color: transparent;
+}
+
+/* Remove any browser-specific overlays */
+.filter-pill-modern::-moz-focus-inner {
+    border: 0;
+}
+
+.filter-pill-modern::selection {
+    background: transparent;
+}
+
+.filter-pill-modern::-moz-selection {
+    background: transparent;
+}
+
+/* Ensure proper stacking context */
+.filter-options-modern {
+    position: relative;
+    z-index: 1;
+}

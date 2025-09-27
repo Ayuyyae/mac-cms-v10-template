@@ -57,7 +57,7 @@ $myPageUrl='vod/show';
 }
 {/php}
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
    <head>
       <meta charset="utf-8">
       <title>{$obj.type_title} - 第{$param.page}页 - {$maccms.site_name}</title>
@@ -76,118 +76,179 @@ $myPageUrl='vod/show';
             </div>
             <div class="responsive-center">
                <div class="parent-category">
-                  <section class="category-filter">
-                     <dl class="filter-row clearfix">
-                        <dt><span>频道</span></dt>
-                        <dd class="filter-slider filter-nav">
-                           <div class="slider-content">
-                              {maccms:type ids="parent" flag="vod" by="sort" order="asc"}
-                              <a class="filter-item slider-item{if $vo.type_id==$obj.type_id||$vo.type_id==$obj.type_pid} selected{/if}" href="{:mac_url_type($vo,[],'show')}">{$vo.type_name}</a>
-                              {/maccms:type}
+                  <!-- Modern Category Filter -->
+                  <section class="category-filter-modern" aria-label="Content filters">
+                     <!-- Channel Filter -->
+                     <div class="filter-section-modern">
+                        <div class="filter-header-modern">
+                           <span class="filter-label-modern">频道</span>
+                           <button class="filter-toggle-modern" aria-label="Toggle filters">
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                 <polyline points="6 9 12 15 18 9"></polyline>
+                              </svg>
+                           </button>
+                        </div>
+                        <div class="filter-options-modern">
+                           {maccms:type ids="parent" flag="vod" by="sort" order="asc"}
+                           <a href="{:mac_url_type($vo,[],'show')}" 
+                              class="filter-pill-modern{if $vo.type_id==$obj.type_id||$vo.type_id==$obj.type_pid} selected{/if}">
+                              {$vo.type_name}
+                           </a>
+                           {/maccms:type}
+                        </div>
+                     </div>
+
+                     <!-- Collapsible Filters -->
+                     <div class="collapsible-filters collapsible-filters-modern">{if !empty($parent_obj.type_id)}
+                        <div class="filter-section-modern">
+                           <div class="filter-header-modern">
+                              <span class="filter-label-modern">分类</span>
                            </div>
-                        </dd>
-                        <button class="filter-toggle" aria-label="Toggle filters">
-                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                              <polyline points="18 15 12 9 6 15"></polyline>
-                           </svg>
-                        </button>
-                     </dl>
-                     <div class="collapsible-rows">
-                     {if !empty($parent_obj.type_id)}
-                     <dl class="filter-row clearfix">
-                        <dt><span>分类</span></dt>
-                        <dd class="filter-slider filter-nav">
-                           <div class="slider-content">
-                              <a class="filter-item slider-item{if $parent_obj.type_id==$obj.type_id} selected{/if}" href="{:mac_url_type($parent_obj,[],'show')}">全部</a>
+                           <div class="filter-options-modern">
+                              <a href="{:mac_url_type($parent_obj,[],'show')}" 
+                                 class="filter-pill-modern{if $parent_obj.type_id==$obj.type_id} selected{/if}">
+                                 全部
+                              </a>
                               {maccms:type ids="child" flag="vod" parent="'.$parent_obj['type_id'].'" by="sort" order="asc"}
-                              <a class="filter-item slider-item{if $vo.type_id==$obj.type_id} selected{/if}" href="{:mac_url_type($vo,[],'show')}">{$vo.type_name}</a>
+                              <a href="{:mac_url_type($vo,[],'show')}" 
+                                 class="filter-pill-modern{if $vo.type_id==$obj.type_id} selected{/if}">
+                                 {$vo.type_name}
+                              </a>
                               {/maccms:type}
                            </div>
-                        </dd>
-                     </dl>
-                     {/if}
-                     {if !empty($areaArray)}
-                     <dl class="filter-row clearfix">
-                        <dt><span>地区</span></dt>
-                        <dd class="filter-slider filter-nav">
-                           <div class="slider-content">
-                              <a class="filter-item slider-item{if empty($param.area)} selected{/if}" href="{:mac_url_type($obj,['class'=>$param.class,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}">全部</a>
+                        </div>
+                        {/if}
+                        
+                        {if !empty($areaArray)}
+                        <!-- Area Filter -->
+                        <div class="filter-section-modern">
+                           <div class="filter-header-modern">
+                              <span class="filter-label-modern">地区</span>
+                           </div>
+                           <div class="filter-options-modern">
+                              <a href="{:mac_url_type($obj,['class'=>$param.class,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
+                                 class="filter-pill-modern{if empty($param.area)} selected{/if}">
+                                 全部
+                              </a>
                               {maccms:foreach name="$areaArray"}
-                              <a class="filter-item slider-item{if $param.area==$vo} selected{/if}" href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$vo,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}">{$vo}</a>
+                              <a href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$vo,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
+                                 class="filter-pill-modern{if $param.area==$vo} selected{/if}">
+                                 {$vo}
+                              </a>
                               {/maccms:foreach}
                            </div>
-                        </dd>
-                     </dl>
-                     {/if}
-                     {if !empty($classArray)}
-                     <dl class="filter-row clearfix">
-                        <dt><span>剧情</span></dt>
-                        <dd class="filter-slider filter-nav">
-                           <div class="slider-content">
-                              <a class="filter-item slider-item{if empty($param.class)} selected{/if}" href="{:mac_url_type($obj,['area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}">全部</a>
+                        </div>
+                        {/if}
+                        
+                        {if !empty($classArray)}
+                        <!-- Class Filter -->
+                        <div class="filter-section-modern">
+                           <div class="filter-header-modern">
+                              <span class="filter-label-modern">剧情</span>
+                           </div>
+                           <div class="filter-options-modern">
+                              <a href="{:mac_url_type($obj,['area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
+                                 class="filter-pill-modern{if empty($param.class)} selected{/if}">
+                                 全部
+                              </a>
                               {maccms:foreach name="$classArray"}
-                              <a class="filter-item slider-item{if $param.class==$vo} selected{/if}" href="{:mac_url_type($obj,['class'=>$vo,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}">{$vo}</a>
+                              <a href="{:mac_url_type($obj,['class'=>$vo,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
+                                 class="filter-pill-modern{if $param.class==$vo} selected{/if}">
+                                 {$vo}
+                              </a>
                               {/maccms:foreach}
                            </div>
-                        </dd>
-                     </dl>
-                     {/if}
-                     {if !empty($langArray)}
-                     <dl class="filter-row clearfix">
-                        <dt><span>语言</span></dt>
-                        <dd class="filter-slider filter-nav">
-                           <div class="slider-content">
-                              <a class="filter-item slider-item{if empty($param.lang)} selected{/if}" href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}">全部</a>
+                        </div>
+                        {/if}
+                        
+                        {if !empty($langArray)}
+                        <!-- Language Filter -->
+                        <div class="filter-section-modern">
+                           <div class="filter-header-modern">
+                              <span class="filter-label-modern">语言</span>
+                           </div>
+                           <div class="filter-options-modern">
+                              <a href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
+                                 class="filter-pill-modern{if empty($param.lang)} selected{/if}">
+                                 全部
+                              </a>
                               {maccms:foreach name="$langArray"}
-                              <a class="filter-item slider-item{if $param.lang==$vo} selected{/if}" href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$vo,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}">{$vo}</a>
+                              <a href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$vo,'year'=>$param.year,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
+                                 class="filter-pill-modern{if $param.lang==$vo} selected{/if}">
+                                 {$vo}
+                              </a>
                               {/maccms:foreach}
                            </div>
-                        </dd>
-                     </dl>
-                     {/if}
-                     {if !empty($yearArray)}
-                     <dl class="filter-row clearfix">
-                        <dt><span>年份</span></dt>
-                        <dd class="filter-slider filter-nav">
-                           <div class="slider-content">
-                              <a class="filter-item slider-item{if empty($param.year)} selected{/if}" href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'letter'=>$param.letter,'by'=>$param.by],'show')}">全部</a>
+                        </div>
+                        {/if}
+                        
+                        {if !empty($yearArray)}
+                        <!-- Year Filter -->
+                        <div class="filter-section-modern">
+                           <div class="filter-header-modern">
+                              <span class="filter-label-modern">年份</span>
+                           </div>
+                           <div class="filter-options-modern">
+                              <a href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
+                                 class="filter-pill-modern{if empty($param.year)} selected{/if}">
+                                 全部
+                              </a>
                               {maccms:foreach name="$yearArray"}
-                              <a class="filter-item slider-item{if $param.year==$vo} selected{/if}" href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$vo,'letter'=>$param.letter,'by'=>$param.by],'show')}">{$vo}</a>
+                              <a href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$vo,'letter'=>$param.letter,'by'=>$param.by],'show')}" 
+                                 class="filter-pill-modern{if $param.year==$vo} selected{/if}">
+                                 {$vo}
+                              </a>
                               {/maccms:foreach}
                            </div>
-                        </dd>
-                     </dl>
-                     {/if}
-                     {if !empty($letterArray)}
-                     <dl class="filter-row clearfix">
-                        <dt><span>字母</span></dt>
-                        <dd class="filter-slider filter-nav">
-                           <div class="slider-content">
-                              <a class="filter-item slider-item{if empty($param.letter)} selected{/if}" href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'by'=>$param.by],'show')}">全部</a>
+                        </div>
+                        {/if}
+                        
+                        {if !empty($letterArray)}
+                        <!-- Letter Filter -->
+                        <div class="filter-section-modern">
+                           <div class="filter-header-modern">
+                              <span class="filter-label-modern">字母</span>
+                           </div>
+                           <div class="filter-options-modern">
+                              <a href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'by'=>$param.by],'show')}" 
+                                 class="filter-pill-modern{if empty($param.letter)} selected{/if}">
+                                 全部
+                              </a>
                               {maccms:foreach name="$letterArray"}
-                              <a class="filter-item slider-item{if $param.letter==$vo} selected{/if}" href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$vo,'by'=>$param.by],'show')}">{$vo}</a>
+                              <a href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$vo,'by'=>$param.by],'show')}" 
+                                 class="filter-pill-modern{if $param.letter==$vo} selected{/if}">
+                                 {$vo}
+                              </a>
                               {/maccms:foreach}
                            </div>
-                        </dd>
-                     </dl>
-                     {/if}
-                     <dl class="filter-row clearfix">
-                        <dt><span>排序</span></dt>
-                        <dd class="filter-slider filter-nav">
-                           <div class="slider-content">
-                              <a class="filter-item slider-item{if $param.by=='time'||empty($param.by)} selected{/if}" href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>'time'],'show')}">最近更新</a>
-                              <a class="filter-item slider-item{if $param.by=='hits'} selected{/if}" href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>'hits'],'show')}">最多播放</a>
-                              <a class="filter-item slider-item{if $param.by=='score'} selected{/if}" href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>'score'],'show')}">最好评</a>
+                        </div>
+                        {/if}
+                        
+                        <!-- Sort Filter -->
+                        <div class="filter-section-modern">
+                           <div class="filter-header-modern">
+                              <span class="filter-label-modern">排序</span>
                            </div>
-                        </dd>
-                     </dl>
-                  </div>
+                           <div class="filter-options-modern">
+                              <a href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>'time'],'show')}" 
+                                 class="filter-pill-modern{if $param.by=='time'||empty($param.by)} selected{/if}">
+                                 最近更新
+                              </a>
+                              <a href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>'hits'],'show')}" 
+                                 class="filter-pill-modern{if $param.by=='hits'} selected{/if}">
+                                 最多播放
+                              </a>
+                              <a href="{:mac_url_type($obj,['class'=>$param.class,'area'=>$param.area,'lang'=>$param.lang,'year'=>$param.year,'letter'=>$param.letter,'by'=>'score'],'show')}" 
+                                 class="filter-pill-modern{if $param.by=='score'} selected{/if}">
+                                 最好评
+                              </a>
+                           </div>
+                        </div>
+                     </div>
                   </section>
+                  
                   <section>
                      <div class="content-grid">
-
-                         
-                         
                          {maccms:vod num="30" paging="yes" pageurl="'.$myPageUrl.'" type="current" order="desc" by="time"}
                              <div class="content-item u-touch-content-item">
                                  <a href="{:mac_url_vod_detail($vo)}" title="{$vo.vod_name}" draggable="false">
@@ -203,8 +264,6 @@ $myPageUrl='vod/show';
                                              <p>{$vo.vod_remarks} <span class="info-typename-remark-time-vod-time">{$vo.vod_time|date='Y-m-d',###}</span></p>
                                          </div>
                                      </div>
-                                     
-                                     
                                  </a>
                              </div>
                          {/maccms:vod}
@@ -219,33 +278,7 @@ $myPageUrl='vod/show';
          </div>
       </main>
       {include file="public/foot"}
-      <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Get elements
-    const filterToggle = document.querySelector('.filter-toggle');
-    const collapsibleRows = document.querySelector('.collapsible-rows');
-    
-    if (filterToggle && collapsibleRows) {
-        // Function to update toggle state
-        function updateToggleState(isCollapsed) {
-            collapsibleRows.classList.toggle('collapsed', isCollapsed);
-            filterToggle.classList.toggle('collapsed', isCollapsed);
-            localStorage.setItem('filterCollapsed', isCollapsed);
-        }
-
-        // Add click event listener
-        filterToggle.addEventListener('click', function() {
-            const isCollapsed = !collapsibleRows.classList.contains('collapsed');
-            updateToggleState(isCollapsed);
-        });
-
-        // Default to open, restore saved state if user previously collapsed
-        const savedState = localStorage.getItem('filterCollapsed') === 'true';
-        updateToggleState(savedState);
-    }
-});
-         </script>
       <script src="{$maccms.path_tpl}js/modern-skeletonhider.js"></script>
-      <script src="{$maccms.path_tpl}js/modern-filter.js"></script>
+      <script src="{$maccms.path_tpl}js/modern-filter-production.js"></script>
    </body>
 </html>
