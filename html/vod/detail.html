@@ -131,9 +131,13 @@
                     </section>
                     
                     <section>
-                        <h2 class="detail-section-title">内容简介</h2>
+                        <h2 class="detail-section-title">详情</h2>
                         <div class="detail-info-typename-remark-time">
-                            <p>{$obj.vod_blurb}</p>
+                            <div id="contentContainer">
+                                <div id="contentFull" style="display: none;">{$obj.vod_content|strip_tags|html_entity_decode}</div>
+                                <div id="contentPreview" style="display: block;">{$obj.vod_content|strip_tags|html_entity_decode|mac_substring=200}</div>
+                            </div>
+                            <button id="toggleContentBtn" class="show-more-btn" style="display: none;">显示更多</button>
                         </div>
                     </section>
                     
@@ -184,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const items = Array.from(list.querySelectorAll(`.${itemType.toLowerCase()}-item`));
 
         if (!list || !showMoreBtn || items.length === 0) {
-            console.warn(`Setup failed for ${listId}`);
+            showMoreBtn.style.display = 'none';
             return;
         }
 
@@ -193,9 +197,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const toggleItemsVisibility = () => {
             items.forEach((item, index) => {
                 if (isShowingMore || index < ITEMS_TO_SHOW) {
+                    item.classList.remove('u-d-none');
                     item.classList.remove('hidden');
+                    item.style.display = 'inline-block'; // Force display override
                 } else {
-                    item.classList.add('hidden');
+                    item.classList.add('u-d-none');
+                    item.style.display = 'none'; // Ensure it's hidden
                 }
             });
         };
@@ -215,14 +222,51 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Initial setup
-        toggleItemsVisibility();
         toggleButtonVisibility();
+        toggleItemsVisibility();
         updateButtonText();
     };
 
     // Setup for both actors and directors
     ['actor', 'director'].forEach(type => setupShowMore(`${type}List`, `showMore${type.charAt(0).toUpperCase() + type.slice(1)}s`));
-});
+
+    // Setup content toggle functionality
+    const contentFull = document.getElementById('contentFull');
+    const contentPreview = document.getElementById('contentPreview');
+    const toggleBtn = document.getElementById('toggleContentBtn');
+
+    if (contentFull && contentPreview && toggleBtn) {
+        // Check if content exists and its length
+        const fullContent = contentFull.textContent.trim();
+        const previewContent = contentPreview.textContent.trim();
+
+        // Show button if we have any content
+        if (fullContent.length > 0) {
+            toggleBtn.style.display = 'inline-block';
+
+            let isShowingFull = false;
+
+            toggleBtn.addEventListener('click', () => {
+                isShowingFull = !isShowingFull;
+
+                if (isShowingFull) {
+                    contentPreview.style.display = 'none';
+                    contentFull.style.display = 'block';
+                    toggleBtn.textContent = '显示更少';
+                } else {
+                    contentPreview.style.display = 'block';
+                    contentFull.style.display = 'none';
+                    toggleBtn.textContent = '显示更多';
+                }
+            });
+        } else {
+            // No content available - hide everything
+            contentPreview.style.display = 'none';
+            contentFull.style.display = 'none';
+            toggleBtn.style.display = 'none';
+        }
+    }
+ });
         </script>
     
 </body>
