@@ -1816,20 +1816,49 @@ em {
 }
 
 .detail-info-typename-remark-time {
-	margin-bottom: 10px;
-	margin-left: 10px;
-}
+ 	margin-bottom: 10px;
+ 	margin-left: 10px;
+ 	display: flex;
+ 	flex-wrap: wrap;
+ 	align-items: flex-start;
+ }
 
 .detail-info-label {
-	font-weight: bold;
-	color: var(--secondary-text-color);
-	margin-right: 8px;
-    white-space: nowrap;
-}
+ 	font-weight: bold;
+ 	color: var(--secondary-text-color);
+ 	margin-right: 8px;
+     white-space: nowrap;
+     flex-shrink: 0;
+     min-width: 3em;
+ }
 
 .detail-info-typename-remark-time a + a {
-	margin-left: 5px;
-  }
+ 	margin-left: 5px;
+   }
+
+/* Ensure actor and director links flex properly */
+.detail-actor-links,
+.detail-director-links {
+	flex: 1;
+	display: flex;
+	flex-wrap: wrap;
+	/*gap: 5px 8px;*/
+	align-items: flex-start;
+}
+
+.detail-actor-links .show-more-btn,
+.detail-director-links .show-more-btn {
+	margin-top: 0;
+	margin-bottom: 0;
+	align-self: flex-start;
+}
+
+/* Ensure actor and director items work properly in flexbox */
+.actor-item,
+.director-item {
+	display: inline-block;
+	flex-shrink: 0;
+}
 
 .detail-play-button {
 	margin-top: 10px;

@@ -4,19 +4,47 @@
 .detail-director-links a,
 .detail-type-links a,
 .detail-area-links a,
-.detail-year-links a,
+.detail-year-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--episode-bg); /* Use episode background for semi-transparent look */
+      color: var(--episode-text); /* Use episode text color */
+      text-decoration: none;
+      margin: 0 8px 8px 0;
+      padding: 4px 10px; /* Original padding for links */
+      border-radius: 5px; /* Match episode border radius */
+      transition: all 0.3s ease, background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease; /* Match episode transitions */
+      font-size: 0.9em;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Match episode box shadow */
+      flex-shrink: 0;
+      line-height: 1.6; /* Increased for better vertical centering */
+      vertical-align: baseline;
+      text-align: center;
+ }
+
 .show-more-btn {
-    display: inline-block;
-    background-color: var(--episode-bg); /* Use episode background for semi-transparent look */
-    color: var(--episode-text); /* Use episode text color */
-    text-decoration: none;
-    margin: 0 8px 8px 0;
-    padding: 4px 10px;
-    border-radius: 5px; /* Match episode border radius */
-    transition: all 0.3s ease, background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease; /* Match episode transitions */
-    font-size: 0.9em;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Match episode box shadow */
-}
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--episode-bg); /* Use episode background for semi-transparent look */
+      color: var(--episode-text); /* Use episode text color */
+      text-decoration: none;
+      /*margin: 0 8px 8px 0;*/
+      padding: 4px 6px; /* Increased vertical padding to match link height */
+      border-radius: 5px; /* Match episode border radius */
+      transition: all 0.3s ease, background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease; /* Match episode transitions */
+      font-size: 0.9em;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Match episode box shadow */
+      flex-shrink: 0;
+      line-height: 1.6; /* Increased for better vertical centering */
+      vertical-align: baseline;
+      min-height: 26px; /* Match the total height of links with padding */
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      outline: none;
+ }
 
 /* Hover effect for all detail links and buttons - match episode hover */
 .detail-actor-links a:hover,
@@ -40,10 +68,4 @@
 .show-more-btn:active {
     transform: scale(0.95);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.show-more-btn {
-    cursor: pointer;
-    border: none;
-    outline: none;
 }
