@@ -188,7 +188,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const items = Array.from(list.querySelectorAll(`.${itemType.toLowerCase()}-item`));
 
         if (!list || !showMoreBtn || items.length === 0) {
-            showMoreBtn.style.display = 'none';
+            if (showMoreBtn) {
+                showMoreBtn.style.display = 'none';
+            }
             return;
         }
 
