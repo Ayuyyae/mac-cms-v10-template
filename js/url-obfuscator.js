@@ -121,13 +121,17 @@ const LinkObfuscator = {
     handleObfuscatedClick: function(e) {
         e.preventDefault();
         e.stopPropagation();
-        
-        const encodedUrl = this.getAttribute('data-url');
+
+        const link = this;
+        link.classList.add('clicked');
+
+        const encodedUrl = link.getAttribute('data-url');
         if (!encodedUrl) {
             console.error('No encoded URL found');
+            link.classList.remove('clicked');
             return;
         }
-        
+
         try {
             const decodedUrl = URLObfuscator.decode(encodedUrl);
             if (decodedUrl && decodedUrl !== '#error') {
@@ -141,6 +145,10 @@ const LinkObfuscator = {
         } catch (e) {
             console.error('Error handling obfuscated click:', e);
         }
+
+        setTimeout(() => {
+            link.classList.remove('clicked');
+        }, 300);
     },
     
     // Prevent right-click context menu on obfuscated links

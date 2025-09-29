@@ -89,20 +89,25 @@
     padding: 10px 20px;
     font-size: 1.2rem;
     font-weight: 600;
-    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s, transform 0.2s;
     outline: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .homeslider-play-button:hover {
     transform: scale(1.05);
-    color: var(--theme-color);
+    background-color: var(--theme-color);
+    color: white;
     font-weight: 600;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
-.homeslider-play-button:active {
-    color: var(--theme-color);
-    transform: scale(0.95);
+.homeslider-play-button:active,
+.homeslider-play-button.clicked {
+    background-color: var(--theme-color);
+    color: white;
+    transform: scale(0.9);
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
 }
 
@@ -166,12 +171,12 @@
     padding: 8px 16px;
   }
   .homeslider-play-button:hover {
-    transform: none;
-    box-shadow: none;
     color: var(--theme-color);
   }
   .homeslider-play-button:active {
-    transform: scale(0.95);
+    transform: scale(0.9);
+    background-color: var(--theme-color);
+    color: white;
   }
   .slide-background::before {
     height: 100px; /* Adjust this value for the top gradient height on mobile */

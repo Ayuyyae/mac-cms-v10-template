@@ -2174,7 +2174,7 @@ em {
 @media (hover: hover) and (pointer: fine) {
     a:hover,
     button:hover {
-        background-color: rgb(255 128 50 / 10%);
+        background-color: transparent;
     }
     
     .stui-page li a:hover:not(.disabled) {
