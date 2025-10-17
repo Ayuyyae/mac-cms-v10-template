@@ -635,6 +635,22 @@ em {
 	color: var(--secondary-text-color);
 }
 
+.stui-foot__disclaimer {
+	margin-top: 12px;
+	font-size: 12px;
+	line-height: 1.7;
+	color: var(--secondary-text-color);
+	opacity: 0.85;
+}
+
+@media (width <= 576px) {
+	.stui-foot__disclaimer {
+		margin-top: 16px;
+		font-size: 11px;
+		padding: 0 16px;
+	}
+}
+
 @media(width >=1200px) {
 	.visible-lg {
 		display: block !important
