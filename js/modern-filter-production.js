@@ -79,15 +79,22 @@ class ModernCategoryFilter {
 
     initActiveItemScroll() {
         // Scroll selected items into view on load with delay for better UX
+        // Using scrollLeft arithmetic instead of scrollIntoView to prevent page jumping
         setTimeout(() => {
             document.querySelectorAll('.filter-options-modern').forEach(container => {
                 const selected = container.querySelector('.selected');
                 if (selected) {
-                    // Use native scrollIntoView for better performance
-                    selected.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'nearest',
-                        inline: 'center' 
+                    // Calculate center position manually to avoid window scrolling
+                    const containerWidth = container.clientWidth;
+                    const selectedWidth = selected.clientWidth;
+                    const selectedLeft = selected.offsetLeft;
+                    
+                    // Center the element: (offset from left) - (half container) + (half element)
+                    const targetScroll = selectedLeft - (containerWidth / 2) + (selectedWidth / 2);
+                    
+                    container.scrollTo({
+                        left: targetScroll,
+                        behavior: 'smooth'
                     });
                 }
             });
