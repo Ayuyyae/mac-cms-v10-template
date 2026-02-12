@@ -1,47 +1,12 @@
-<style>
-.split-line {
-transform: skew(-15deg);
-}
-</style>
-		<div class="stui-foot clearfix">
-            <div class="margin-0">©{$maccms.site_name}</div>
-            <p class="stui-foot__disclaimer">本网站所有视频资源均来自互联网在线源，我们不存储、不上传、不制作任何视频内容。本站仅作为信息聚合平台，所有作品版权归原作者及版权方所有。如有侵权，请联系我们删除。</p>
+<div class="stui-foot clearfix">
+    <div class="margin-0">©{$maccms.site_name}</div>
+    <p class="stui-foot__disclaimer">本网站所有视频资源均来自互联网在线源，我们不存储、不上传、不制作任何视频内容。本站仅作为信息聚合平台，所有作品版权归原作者及版权方所有。如有侵权，请联系我们删除。
+    </p>
 
-		</div>
-		<div class="hide">
-			{$maccms.site_tj}
-		</div>
-		<script>
-			document.addEventListener('keydown', function handleKeydown(event) {
-    const e = event || window.event;
+</div>
+<div class="hide">
+    {$maccms.site_tj}
+</div>
 
-    const forbiddenKeys = [
-        { ctrlKey: true, shiftKey: true, keyCode: 73 },  // Ctrl + Shift + I
-        { ctrlKey: true, keyCode: 85 },                 // Ctrl + U
-        { ctrlKey: true, keyCode: 83 },                 // Ctrl + S
-        { keyCode: 123 }                                // F12
-    ];
-
-    for (const key of forbiddenKeys) {
-        if ((key.ctrlKey ? e.ctrlKey : true) && (key.shiftKey ? e.shiftKey : true) && e.keyCode === key.keyCode) {
-            e.preventDefault();
-            alert('Hi');
-            return false;
-        }
-    }
-});
-
-const threshold = 160;
-const intervalId = setInterval(function() {
-    if (window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold) {
-        function disableDebugger() {
-            debugger;
-        }
-        disableDebugger();
-    }
-}, 1000);
-
-window.addEventListener('beforeunload', function() {
-    clearInterval(intervalId);
-});
-		</script>
+<!-- Professional Silent Protection -->
+<script src="{$maccms.path_tpl}js/modern-protection.js" async></script>

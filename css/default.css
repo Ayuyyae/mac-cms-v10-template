@@ -526,8 +526,7 @@ em {
 	padding: 5px 15px;
 	border-radius: 4px;
 	border: 1px solid var(--paging-border-color);
-	transition: transform 0.2s, background-color 0.3s ease, border-color 0.3s ease;
-	/* Add transition for smooth effect */
+	transition: transform 0.1s ease, background-color 0.3s ease, border-color 0.3s ease;
 	user-select: none;
 	-webkit-tap-highlight-color: transparent;
 }
@@ -546,14 +545,13 @@ em {
 	color: var(--paging-text);
 	border: 1px solid var(--theme-color);
 	transform: scale(1.05);
-	transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
 }
 
+.stui-page li a:active:not(.disabled),
 .stui-page a:active:not(.disabled) {
-	transform: scale(0.95);
+	transform: scale(0.95) !important;
 	background-color: var(--theme-color);
 	border: 1px solid var(--theme-color);
-	transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
 }
 
 .stui-page li a:focus:not(.disabled, :hover, :active, .currentpage a) {
