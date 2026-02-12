@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>{$obj.vod_name}详情介绍-{$obj.vod_name}在线观看 - {$maccms.site_name}</title>
@@ -9,6 +10,7 @@
     {include file="public/include"}
     {include file="public/head"}
 </head>
+
 <body>
     <main class="layoutMain">
         <div class="responsive">
@@ -21,117 +23,159 @@
                         <div class="detail-content-grid">
                             <div class="detail-content-item">
                                 <a href="{$obj|mac_url_vod_play}" title="{$obj.vod_name}" draggable="false">
-                                  <div class="lazyload-image-container">
-                                    <div class="lazyload-image-skeleton skeleton"></div>
-                                    <img class="lazyload" data-src="{:mac_url_img($obj.vod_pic)}" alt="{$obj.vod_name}" loading="lazy" draggable="false" />
-                                 </div>
-                                  <div class="detail-img-overlay"></div>
-                                  <svg class="detail-img-play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                                    <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80L0 432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/>
-                                  </svg>
+                                    <div class="lazyload-image-container">
+                                        <div class="lazyload-image-skeleton skeleton"></div>
+                                        <img class="lazyload" data-src="{:mac_url_img($obj.vod_pic)}"
+                                            alt="{$obj.vod_name}" loading="lazy" draggable="false" />
+                                    </div>
+                                    <div class="detail-img-overlay"></div>
+                                    <svg class="detail-img-play-icon" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 384 512">
+                                        <path
+                                            d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80L0 432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z" />
+                                    </svg>
                                 </a>
-                              </div>                                                                                        
+                            </div>
                             <div class="details-details">
                                 <h1 class="detail-title">{$obj.vod_name}</h1>
                                 <div class="detail-info-typename-remark-time">
-                                    <span class="detail-info-label">状态：</span>{if ($obj.type.type_id == 1) || ($obj.type_id_1 == 1)||($obj.type.type_name == '电影') || ($obj.type_1.type_name == '电影')}{$obj.vod_remarks|default='高清'}{elseif !empty($obj.vod_remarks)/}{$obj.vod_remarks}{elseif !empty($obj.vod_serial)/}更新至第{$obj.vod_serial}集{else/}全集{/if}</div>
-                                    <div class="detail-info-typename-remark-time">
-                                        <span class="detail-info-label">主演：</span>
-                                        <span class="detail-actor-links" id="actorList">
-                                            {php}
-                                            $spliter = array(' / ', '/', '|', ',', '，', ',,');
-                                            $actors = explode(',', trim(str_replace($spliter, ',', $obj['vod_actor']), ','));
-                                            $valid_actors = array_filter($actors, function($actor) { return $actor !== '' && $actor !== '未知'; });
-                                            {/php}
-                                            {if condition="!empty($valid_actors)"}
-                                                {volist name="actors" id="actor" key="key"}
-                                                    {if condition="$actor neq '' && $actor neq '未知'"}
-                                                        <span class="actor-item {if condition="$key gt 5"}u-d-none{/if}">
-                                                            {maccms:actor name="$actor" num="1" by="time" order="desc"}
-                                                                <a href="{$vo.actor_detail|mac_url_actor_detail}" target="_blank" draggable="false" class="episode-link-style">{$vo.actor_name}</a>
-                                                            {/maccms:actor}
-                                                            {if condition="$maccms.actor == ''"}
-                                                                <a href="{:mac_url('vod/search',['actor'=>$actor])}" target="_blank" draggable="false" class="episode-link-style">{$actor|htmlspecialchars}</a>
-                                                            {/if}
-                                                        </span>
-                                                    {/if}
-                                                {/volist}
-                                                {if condition="count($valid_actors) gt 5"}
-                                                    <button id="showMoreActors" class="show-more-btn">显示更多</button>
-                                                {/if}
-                                            {else /}
-                                                未知
+                                    <span class="detail-info-label">状态：</span>{if ($obj.type.type_id == 1) ||
+                                    ($obj.type_id_1 == 1)||($obj.type.type_name == '电影') || ($obj.type_1.type_name ==
+                                    '电影')}{$obj.vod_remarks|default='高清'}{elseif
+                                    !empty($obj.vod_remarks)/}{$obj.vod_remarks}{elseif
+                                    !empty($obj.vod_serial)/}更新至第{$obj.vod_serial}集{else/}全集{/if}
+                                </div>
+                                <div class="detail-info-typename-remark-time">
+                                    <span class="detail-info-label">主演：</span>
+                                    <span class="detail-actor-links" id="actorList">
+                                        {php}
+                                        $spliter = array(' / ', '/', '|', ',', '，', ',,');
+                                        $actors = explode(',', trim(str_replace($spliter, ',', $obj['vod_actor']),
+                                        ','));
+                                        $valid_actors = array_filter($actors, function($actor) { return $actor !== '' &&
+                                        $actor !== '未知'; });
+                                        {/php}
+                                        {if condition="!empty($valid_actors)"}
+                                        {volist name="actors" id="actor" key="key"}
+                                        {if condition="$actor neq '' && $actor neq '未知'"}
+                                        <span class="actor-item {if condition=" $key gt 5"}u-d-none{/if}">
+                                            {maccms:actor name="$actor" num="1" by="time" order="desc"}
+                                            <a href="{$vo.actor_detail|mac_url_actor_detail}" target="_blank"
+                                                draggable="false" class="episode-link-style">{$vo.actor_name}</a>
+                                            {/maccms:actor}
+                                            {if condition="$maccms.actor == ''"}
+                                            <a href="{:mac_url('vod/search',['actor'=>$actor])}" target="_blank"
+                                                draggable="false"
+                                                class="episode-link-style">{$actor|htmlspecialchars}</a>
                                             {/if}
                                         </span>
-                                    </div>
-                                    
-                                    <div class="detail-info-typename-remark-time">
-                                        <span class="detail-info-label">导演：</span>
-                                        <span class="detail-director-links" id="directorList">
-                                            {php}
-                                            $spliter = array(' / ', '/', '|', ',', '，', ',,');
-                                            $directors = explode(',', trim(str_replace($spliter, ',', $obj['vod_director']), ','));
-                                            $valid_directors = array_filter($directors, function($director) { return $director !== '' && $director !== '未知'; });
-                                            {/php}
-                                            {if condition="!empty($valid_directors)"}
-                                                {volist name="directors" id="director" key="key"}
-                                                    {if condition="$director neq '' && $director neq '未知'"}
-                                                        <span class="director-item {if condition="$key gt 5"}u-d-none{/if}">
-                                                            {if condition="$maccms.director == ''"}
-                                                                <a href="{:mac_url('vod/search',['director'=>$director])}" target="_blank" draggable="false" class="episode-link-style">{$director|htmlspecialchars}</a>
-                                                            {/if}
-                                                        </span>
-                                                    {/if}
-                                                {/volist}
-                                                {if condition="count($valid_directors) gt 5"}
-                                                    <button id="showMoreDirectors" class="show-more-btn">显示更多</button>
-                                                {/if}
-                                            {else /}
-                                                未知
+                                        {/if}
+                                        {/volist}
+                                        {if condition="count($valid_actors) gt 5"}
+                                        <button id="showMoreActors" class="show-more-btn">显示更多</button>
+                                        {/if}
+                                        {else /}
+                                        未知
+                                        {/if}
+                                    </span>
+                                </div>
+
+                                <div class="detail-info-typename-remark-time">
+                                    <span class="detail-info-label">导演：</span>
+                                    <span class="detail-director-links" id="directorList">
+                                        {php}
+                                        $spliter = array(' / ', '/', '|', ',', '，', ',,');
+                                        $directors = explode(',', trim(str_replace($spliter, ',', $obj['vod_director']),
+                                        ','));
+                                        $valid_directors = array_filter($directors, function($director) { return
+                                        $director !== '' && $director !== '未知'; });
+                                        {/php}
+                                        {if condition="!empty($valid_directors)"}
+                                        {volist name="directors" id="director" key="key"}
+                                        {if condition="$director neq '' && $director neq '未知'"}
+                                        <span class="director-item {if condition=" $key gt 5"}u-d-none{/if}">
+                                            {if condition="$maccms.director == ''"}
+                                            <a href="{:mac_url('vod/search',['director'=>$director])}" target="_blank"
+                                                draggable="false"
+                                                class="episode-link-style">{$director|htmlspecialchars}</a>
                                             {/if}
                                         </span>
-                                    </div>
-                                    
+                                        {/if}
+                                        {/volist}
+                                        {if condition="count($valid_directors) gt 5"}
+                                        <button id="showMoreDirectors" class="show-more-btn">显示更多</button>
+                                        {/if}
+                                        {else /}
+                                        未知
+                                        {/if}
+                                    </span>
+                                </div>
+
                                 <div class="detail-info-typename-remark-time">
-                                    <span class="detail-info-label">类型：</span><span class="detail-type-links"><a href="{$obj.type|mac_url_type}" draggable="false" class="episode-link-style">{$obj.type.type_name}</a>{if !empty($obj.vod_class)}{maccms:foreach name=":explode(',',$obj.vod_class)"}<a href="{:mac_url_type($obj.type,['class'=>$vo],'show')}" draggable="false" class="episode-link-style">{$vo}</a>{/maccms:foreach}{/if}</span></div>
+                                    <span class="detail-info-label">类型：</span><span class="detail-type-links"><a
+                                            href="{$obj.type|mac_url_type}" draggable="false"
+                                            class="episode-link-style">{$obj.type.type_name}</a>{if
+                                        !empty($obj.vod_class)}{maccms:foreach name=":explode(',',$obj.vod_class)"}<a
+                                            href="{:mac_url_type($obj.type,['class'=>$vo],'show')}" draggable="false"
+                                            class="episode-link-style">{$vo}</a>{/maccms:foreach}{/if}</span>
+                                </div>
                                 <div class="detail-info-typename-remark-time">
-                                    <span class="detail-info-label">地区：</span><span class="detail-area-links">{if !empty($obj.vod_area)}{maccms:foreach name=":explode(',',$obj.vod_area)"}<a href="{:mac_url_type($obj.type,['area'=>$vo],'show')}" draggable="false" class="episode-link-style">{$vo}</a>{/maccms:foreach}{else/}未知{/if}</span></div>
+                                    <span class="detail-info-label">地区：</span><span class="detail-area-links">{if
+                                        !empty($obj.vod_area)}{maccms:foreach name=":explode(',',$obj.vod_area)"}<a
+                                            href="{:mac_url_type($obj.type,['area'=>$vo],'show')}" draggable="false"
+                                            class="episode-link-style">{$vo}</a>{/maccms:foreach}{else/}未知{/if}</span>
+                                </div>
                                 <div class="detail-info-typename-remark-time">
-                                    <span class="detail-info-label">年份：</span><span class="detail-year-links">{if !empty($obj.vod_year)}{maccms:foreach name=":explode(',',$obj.vod_year)"}<a href="{:mac_url_type($obj.type,['year'=>$vo],'show')}" draggable="false" class="episode-link-style">{$vo}</a>{/maccms:foreach}{else/}未知{/if}</span></div>
+                                    <span class="detail-info-label">年份：</span><span class="detail-year-links">{if
+                                        !empty($obj.vod_year)}{maccms:foreach name=":explode(',',$obj.vod_year)"}<a
+                                            href="{:mac_url_type($obj.type,['year'=>$vo],'show')}" draggable="false"
+                                            class="episode-link-style">{$vo}</a>{/maccms:foreach}{else/}未知{/if}</span>
+                                </div>
                                 <div class="detail-info-typename-remark-time">
-                                    <span class="detail-info-label">更新：</span>{$obj.vod_time|mac_day}</div>
-                                <a href="{$obj|mac_url_vod_play}" title="{$obj.vod_name}" class="detail-play-button" draggable="false">
+                                    <span class="detail-info-label">更新：</span>{$obj.vod_time|mac_day}
+                                </div>
+                                <a href="{$obj|mac_url_vod_play}" title="{$obj.vod_name}" class="detail-play-button"
+                                    draggable="false">
                                     立即播放
                                 </a>
-                                
+
                             </div>
                         </div>
                     </section>
-                    
+
                     <section>
                         <h2 class="detail-section-title">详情</h2>
                         <div class="detail-info-typename-remark-time">
                             <div id="contentContainer">
-                                <div id="contentFull" style="display: none;">{$obj.vod_content|strip_tags|html_entity_decode}</div>
-                                <div id="contentPreview" style="display: block;">{$obj.vod_content|strip_tags|html_entity_decode|mac_substring=200}</div>
+                                <div id="contentFull" style="display: none;">
+                                    {$obj.vod_content|strip_tags|html_entity_decode}</div>
+                                <div id="contentPreview" style="display: block;">
+                                    {$obj.vod_content|strip_tags|html_entity_decode|mac_substring=200}</div>
                             </div>
                             <button id="toggleContentBtn" class="show-more-btn" style="display: none;">显示更多</button>
                         </div>
                     </section>
-                    
+
                     <section>
                         <h2 class="detail-section-title">
                             播放类型
                             <button type="button" class="more-link episode-sort-btn" onclick="toggleOrderAndFlip();">
                                 切换顺序
-                                <svg id="orderIcon" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 421.65" width="20" height="20" class="more-link-icon"><path fill="currentColor" fill-rule="nonzero" d="M383.01 379.71c11.57 0 20.97 9.4 20.97 20.97 0 11.57-9.4 20.97-20.97 20.97l-362.04-.44C9.4 421.21 0 411.81 0 400.24c0-11.57 9.4-20.97 20.97-20.97l362.04.44zm-90.97-238.93c-7.91 7.94-20.8 7.99-28.74.08-7.94-7.91-7.99-20.8-.08-28.74L369.33 5.98c7.91-7.94 20.79-7.99 28.73-.08l107.98 107.91c7.95 7.94 7.95 20.87 0 28.81-7.94 7.95-20.87 7.95-28.81 0l-73.12-73.11.32 206.40 0 11.2-9.1 20.3-20.29-20.3.32-206.63-71.48 71.5zM171.62 40.59c11.57 0 20.97 9.41 20.97 20.98 0 11.56-9.4 20.97-20.97 20.97l-150.65-.16C9.4 82.38 0 72.97 0 61.4c0-11.56 9.4-20.97 20.97-20.97l150.65.16zm41.33 170.71c11.57 0 20.97 9.4 20.97 20.97 0 11.57-9.4 20.97-20.97 20.97l-191.98-.23C9.4 253.01 0 243.61 0 232.04c0-11.56 9.4-20.97 20.97-20.97l191.98.23z"/></svg>
+                                <svg id="orderIcon" xmlns="http://www.w3.org/2000/svg"
+                                    shape-rendering="geometricPrecision" text-rendering="geometricPrecision"
+                                    image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd"
+                                    viewBox="0 0 512 421.65" width="20" height="20" class="more-link-icon">
+                                    <path fill="currentColor" fill-rule="nonzero"
+                                        d="M383.01 379.71c11.57 0 20.97 9.4 20.97 20.97 0 11.57-9.4 20.97-20.97 20.97l-362.04-.44C9.4 421.21 0 411.81 0 400.24c0-11.57 9.4-20.97 20.97-20.97l362.04.44zm-90.97-238.93c-7.91 7.94-20.8 7.99-28.74.08-7.94-7.91-7.99-20.8-.08-28.74L369.33 5.98c7.91-7.94 20.79-7.99 28.73-.08l107.98 107.91c7.95 7.94 7.95 20.87 0 28.81-7.94 7.95-20.87 7.95-28.81 0l-73.12-73.11.32 206.40 0 11.2-9.1 20.3-20.29-20.3.32-206.63-71.48 71.5zM171.62 40.59c11.57 0 20.97 9.41 20.97 20.98 0 11.56-9.4 20.97-20.97 20.97l-150.65-.16C9.4 82.38 0 72.97 0 61.4c0-11.56 9.4-20.97 20.97-20.97l150.65.16zm41.33 170.71c11.57 0 20.97 9.4 20.97 20.97 0 11.57-9.4 20.97-20.97 20.97l-191.98-.23C9.4 253.01 0 243.61 0 232.04c0-11.56 9.4-20.97 20.97-20.97l191.98.23z" />
+                                </svg>
                             </button>
                         </h2>
                         <div class="episode-list" id="episodeList">
                             {maccms:foreach name="obj.vod_play_list" id="vo" key="key"}
                             {maccms:foreach name="vo.urls" id="vo2" key="key2" }
                             <div class="episode">
-                                <a href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}"draggable="false">{$vo2.name}</a>
+                                <a href="{:mac_url_vod_play($obj,['sid'=>$vo.sid,'nid'=>$vo2.nid])}"
+                                    draggable="false">{$vo2.name}</a>
                             </div>
                             {/maccms:foreach}
                             {/maccms:foreach}
@@ -145,109 +189,109 @@
         </div>
     </main>
     {include file="public/foot"}
-    
-    <!-- Anti-hijacking and URL obfuscation -->
-    <script src="{$maccms.path_tpl}js/url-obfuscator.js"></script>
-    
+
+
+
     <script src="{$maccms.path_tpl}js/modern-skeletonhider.js"></script>
     <script src="{$maccms.path_tpl}js/modern-sorting.js"></script>
     <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const ITEMS_TO_SHOW = 5;
-    const BUTTON_TEXTS = {
-        showMore: '显示更多',
-        showLess: '显示更少'
-    };
+        document.addEventListener('DOMContentLoaded', () => {
+            const ITEMS_TO_SHOW = 5;
+            const BUTTON_TEXTS = {
+                showMore: '显示更多',
+                showLess: '显示更少'
+            };
 
-    const setupShowMore = (listId, buttonId) => {
-        const list = document.getElementById(listId);
-        const showMoreBtn = document.getElementById(buttonId);
-        const itemType = listId.replace('List', '');
-        const items = Array.from(list.querySelectorAll(`.${itemType.toLowerCase()}-item`));
+            const setupShowMore = (listId, buttonId) => {
+                const list = document.getElementById(listId);
+                const showMoreBtn = document.getElementById(buttonId);
+                const itemType = listId.replace('List', '');
+                const items = Array.from(list.querySelectorAll(`.${itemType.toLowerCase()}-item`));
 
-        if (!list || !showMoreBtn || items.length === 0) {
-            if (showMoreBtn) {
-                showMoreBtn.style.display = 'none';
-            }
-            return;
-        }
-
-        let isShowingMore = false;
-
-        const toggleItemsVisibility = () => {
-            items.forEach((item, index) => {
-                if (isShowingMore || index < ITEMS_TO_SHOW) {
-                    item.classList.remove('u-d-none');
-                    item.classList.remove('hidden');
-                    item.style.display = 'inline-block'; // Force display override
-                } else {
-                    item.classList.add('u-d-none');
-                    item.style.display = 'none'; // Ensure it's hidden
+                if (!list || !showMoreBtn || items.length === 0) {
+                    if (showMoreBtn) {
+                        showMoreBtn.style.display = 'none';
+                    }
+                    return;
                 }
-            });
-        };
 
-        const toggleButtonVisibility = () => {
-            showMoreBtn.style.display = items.length > ITEMS_TO_SHOW ? 'inline-block' : 'none';
-        };
+                let isShowingMore = false;
 
-        const updateButtonText = () => {
-            showMoreBtn.textContent = isShowingMore ? BUTTON_TEXTS.showLess : BUTTON_TEXTS.showMore;
-        };
+                const toggleItemsVisibility = () => {
+                    items.forEach((item, index) => {
+                        if (isShowingMore || index < ITEMS_TO_SHOW) {
+                            item.classList.remove('u-d-none');
+                            item.classList.remove('hidden');
+                            item.style.display = 'inline-block'; // Force display override
+                        } else {
+                            item.classList.add('u-d-none');
+                            item.style.display = 'none'; // Ensure it's hidden
+                        }
+                    });
+                };
 
-        showMoreBtn.addEventListener('click', () => {
-            isShowingMore = !isShowingMore;
-            toggleItemsVisibility();
-            updateButtonText();
-        });
+                const toggleButtonVisibility = () => {
+                    showMoreBtn.style.display = items.length > ITEMS_TO_SHOW ? 'inline-block' : 'none';
+                };
 
-        // Initial setup
-        toggleButtonVisibility();
-        toggleItemsVisibility();
-        updateButtonText();
-    };
+                const updateButtonText = () => {
+                    showMoreBtn.textContent = isShowingMore ? BUTTON_TEXTS.showLess : BUTTON_TEXTS.showMore;
+                };
 
-    // Setup for both actors and directors
-    ['actor', 'director'].forEach(type => setupShowMore(`${type}List`, `showMore${type.charAt(0).toUpperCase() + type.slice(1)}s`));
+                showMoreBtn.addEventListener('click', () => {
+                    isShowingMore = !isShowingMore;
+                    toggleItemsVisibility();
+                    updateButtonText();
+                });
 
-    // Setup content toggle functionality
-    const contentFull = document.getElementById('contentFull');
-    const contentPreview = document.getElementById('contentPreview');
-    const toggleBtn = document.getElementById('toggleContentBtn');
+                // Initial setup
+                toggleButtonVisibility();
+                toggleItemsVisibility();
+                updateButtonText();
+            };
 
-    if (contentFull && contentPreview && toggleBtn) {
-        // Check if content exists and its length
-        const fullContent = contentFull.textContent.trim();
-        const previewContent = contentPreview.textContent.trim();
+            // Setup for both actors and directors
+            ['actor', 'director'].forEach(type => setupShowMore(`${type}List`, `showMore${type.charAt(0).toUpperCase() + type.slice(1)}s`));
 
-        // Show button if we have any content
-        if (fullContent.length > 0) {
-            toggleBtn.style.display = 'inline-block';
+            // Setup content toggle functionality
+            const contentFull = document.getElementById('contentFull');
+            const contentPreview = document.getElementById('contentPreview');
+            const toggleBtn = document.getElementById('toggleContentBtn');
 
-            let isShowingFull = false;
+            if (contentFull && contentPreview && toggleBtn) {
+                // Check if content exists and its length
+                const fullContent = contentFull.textContent.trim();
+                const previewContent = contentPreview.textContent.trim();
 
-            toggleBtn.addEventListener('click', () => {
-                isShowingFull = !isShowingFull;
+                // Show button if we have any content
+                if (fullContent.length > 0) {
+                    toggleBtn.style.display = 'inline-block';
 
-                if (isShowingFull) {
+                    let isShowingFull = false;
+
+                    toggleBtn.addEventListener('click', () => {
+                        isShowingFull = !isShowingFull;
+
+                        if (isShowingFull) {
+                            contentPreview.style.display = 'none';
+                            contentFull.style.display = 'block';
+                            toggleBtn.textContent = '显示更少';
+                        } else {
+                            contentPreview.style.display = 'block';
+                            contentFull.style.display = 'none';
+                            toggleBtn.textContent = '显示更多';
+                        }
+                    });
+                } else {
+                    // No content available - hide everything
                     contentPreview.style.display = 'none';
-                    contentFull.style.display = 'block';
-                    toggleBtn.textContent = '显示更少';
-                } else {
-                    contentPreview.style.display = 'block';
                     contentFull.style.display = 'none';
-                    toggleBtn.textContent = '显示更多';
+                    toggleBtn.style.display = 'none';
                 }
-            });
-        } else {
-            // No content available - hide everything
-            contentPreview.style.display = 'none';
-            contentFull.style.display = 'none';
-            toggleBtn.style.display = 'none';
-        }
-    }
- });
-        </script>
-    
+            }
+        });
+    </script>
+
 </body>
+
 </html>
