@@ -9,14 +9,6 @@
     display: none !important;
 }
 
-.u-d-block {
-    display: block !important;
-}
-
-.is-hidden {
-    display: none !important;
-}
-
 /* Text and alignment */
 .u-text-center {
     text-align: center !important;
