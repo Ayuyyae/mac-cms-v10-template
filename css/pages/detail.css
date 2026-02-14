@@ -1,0 +1,264 @@
+@charset "utf-8";
+
+/* Detail page: layout, poster image, info, episodes, play button */
+
+.detail-section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.125rem;
+    margin: 50px 0 10px;
+    padding-left: 10px;
+    border-left: 4px solid var(--theme-color);
+    color: var(--title-color);
+}
+
+.detail-content-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 20px;
+}
+
+.detail-content-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+    aspect-ratio: 2 / 3;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 300px;
+    cursor: pointer;
+}
+
+.detail-content-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.detail-content-item .detail-img-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0 0 0 / 50%);
+    /* Semi-transparent overlay */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.detail-content-item:hover .detail-img-overlay {
+    opacity: 0.5;
+}
+
+.detail-content-item .detail-img-play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    /* Ensure SVG is on top */
+    width: 50px;
+    height: 50px;
+    fill: white;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.detail-content-item:hover .detail-img-play-icon {
+    opacity: 1;
+}
+
+.detail-content-item:active .detail-img-play-icon {
+    transform: translate(-50%, -50%) scale(0.95);
+}
+
+.details-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--title-color);
+}
+
+.detail-info-typename-remark-time {
+    margin-bottom: 10px;
+    margin-left: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.detail-info-label {
+    font-weight: bold;
+    color: var(--secondary-text-color);
+    margin-right: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 3em;
+}
+
+.detail-info-typename-remark-time a+a {
+    margin-left: 5px;
+}
+
+/* Ensure actor and director links flex properly */
+.detail-actor-links,
+.detail-director-links {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    /*gap: 5px 8px;*/
+    align-items: flex-start;
+}
+
+.detail-actor-links .show-more-btn,
+.detail-director-links .show-more-btn {
+    margin-top: 0;
+    margin-bottom: 0;
+    align-self: flex-start;
+}
+
+/* Ensure actor and director items work properly in flexbox */
+.actor-item,
+.director-item {
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.detail-play-button {
+    margin-top: 10px;
+    background-color: var(--theme-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    align-self: flex-start;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    color: white;
+}
+
+.detail-play-button:hover {
+    background-color: #ff6a00;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgb(255 255 255 / 50%);
+}
+
+.detail-play-button:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 5px rgb(255 255 255 / 30%);
+}
+
+.detail-play-button:focus {
+    outline: 2px solid var(--theme-color);
+    outline-offset: 2px;
+}
+
+
+.parent-category {
+    margin-top: 20px;
+}
+
+.episode-list {
+    display: grid;
+    margin-top: 10px;
+    padding: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    max-height: 358px;
+    overflow: auto;
+    overflow-anchor: auto;
+    /* Modern CSS scroll anchoring - prevents content jumps */
+    scroll-behavior: auto;
+    /* Prevent unexpected smooth scrolling during DOM updates */
+}
+
+.episode {
+    background-color: var(--episode-bg);
+    border-radius: 5px;
+    text-align: center;
+    transition: all 0.3s ease, background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+}
+
+.episode:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+    background-color: var(--theme-color);
+}
+
+.episode:active {
+    transform: scale(0.95);
+    box-shadow: 0 0 5px rgb(0 0 0 / 10%);
+    background-color: var(--theme-color);
+}
+
+.episode.currentplay {
+    background-color: var(--theme-color);
+}
+
+.episode a {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    color: var(--episode-text);
+    /* Always white for none-active states in dark theme */
+    transition: background-color 0.3s, color 0.3s;
+    align-items: center;
+    justify-content: center;
+
+    /* text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap; */
+}
+
+.episode:hover a,
+.episode.currentplay a,
+.episode:active a {
+    color: var(--light-episode-text);
+}
+
+/* Episode link style for detail page - matches episode styling */
+.episode-link-style {
+    display: inline-block;
+    background-color: var(--episode-bg);
+    color: var(--episode-text);
+    text-decoration: none;
+    margin: 0 8px 8px 0;
+    padding: 4px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease, background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    font-size: 0.9em;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.episode-link-style:hover {
+    background-color: var(--theme-color);
+    color: var(--light-episode-text);
+    transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.episode-link-style:active {
+    transform: scale(0.95);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+@media (width <=768px) {
+    .detail-content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-content-item {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+}

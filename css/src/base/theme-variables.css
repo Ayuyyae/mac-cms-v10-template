@@ -1,0 +1,83 @@
+@charset "utf-8";
+
+/* Theme Variables: dark (default) and light theme custom properties */
+
+:root {
+    --theme-color: #ff8032;
+    --theme-color-rgb: 255, 128, 50;
+    /* RGB values for rgba() usage */
+    --card-bg-rgb: 27, 34, 43;
+    /* RGB values for card background */
+    --bg-color:
+        /* #1a1a1a;*/
+        rgb(17 24 33);
+    --more-link-color: #ffff;
+    --title-color: #ffff;
+    --card-bg: #1B222B;
+    --text-color: #ffff;
+    --secondary-text-color: #bbb;
+    --split-line-color: #ff8032;
+    --navbar-link-color: #ffff;
+    --paging-border-color: #ffff;
+    --search-container-bg-color: #ffff;
+    --toggle-color: #ffff;
+    --show-name: #ffff;
+    --detail-play-button-text: #ffff;
+    --episode-bg: rgb(255 255 255 / 10%);
+    --episode-text: #fff;
+    --light-episode-text: #fff;
+    /* Always white for hover and active states in dark theme */
+    --paging-text: #ffff;
+    --navbar-link-hover: #ffff;
+    --home-slide-gradient-start: rgb(17 24 33 / 100%);
+    --home-slide-gradient-end: rgb(17 24 33 / 0%);
+    --home-slide-pagination-bullet-bg: rgb(255 255 255 / 40%);
+    --home-slide-pagination-bullet-active-bg: #ff8032;
+    --small-menu-bg: #1a1a1a;
+    --small-menu-text: #fff;
+    --small-menu-hover-bg: #2c2c2c;
+    --small-menu-active-bg: #333;
+    --small-menu-active-text: #ff8032;
+    --small-dropdown-bg: #262626;
+    --small-dropdown-hover-bg: #3a3a3a;
+    --small-dropdown-hover-text: #ff8032;
+    --small-icon-color: #fff;
+}
+
+/* Light theme colors */
+.light-theme {
+    --bg-color: #f6f8fb;
+    --more-link-color: #333;
+    --title-color: #333;
+    --card-bg: #fff;
+    --card-bg-rgb: 255, 255, 255;
+    /* Light theme card background RGB */
+    --text-color: #333;
+    --secondary-text-color: #666;
+    --split-line-color: #ff8032;
+    --navbar-link-color: #333;
+    --paging-border-color: #333;
+    --search-container-bg-color: #ffff;
+    --toggle-color: #333;
+    --detail-play-button-text: #ffff;
+    --episode-bg: rgb(204 204 204 / 20%);
+    --episode-text: #333;
+    /* none active */
+    --light-episode-text: #fff;
+    /* Ensure white text on hover/active in light theme */
+    --paging-text: #ffff;
+    --navbar-link-hover: #333;
+    --home-slide-gradient-start: rgb(246 248 251 / 100%);
+    --home-slide-gradient-end: rgb(246 248 251 / 0%);
+    --home-slide-pagination-bullet-bg: rgb(51 51 51 / 20%);
+    --home-slide-pagination-bullet-active-bg: #ff8032;
+    --small-menu-bg: #f3f6f3;
+    --small-menu-text: #000;
+    --small-menu-hover-bg: #e9eaec;
+    --small-menu-active-bg: #e0e0e0;
+    --small-menu-active-text: #006ffd;
+    --small-dropdown-bg: #f9f9f9;
+    --small-dropdown-hover-bg: #e0e0e0;
+    --small-dropdown-hover-text: #006ffd;
+    --small-icon-color: #000;
+}

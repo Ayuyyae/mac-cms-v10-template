@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+/* Footer */
+
+.stui-foot {
+    padding: 20px;
+    text-align: center;
+    color: var(--secondary-text-color);
+}
+
+.stui-foot__disclaimer {
+    margin-top: 12px;
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--secondary-text-color);
+    opacity: 0.85;
+}
+
+@media (width <=576px) {
+    .stui-foot__disclaimer {
+        margin-top: 16px;
+        font-size: 11px;
+        padding: 0 16px;
+    }
+}

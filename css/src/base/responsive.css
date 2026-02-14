@@ -1,0 +1,150 @@
+@charset "utf-8";
+
+/* Responsive breakpoints: visibility toggles and layout overrides */
+
+@media(width >=1200px) {
+    .visible-lg {
+        display: block !important
+    }
+
+    .hidden-lg {
+        display: none !important
+    }
+}
+
+@media(width <=1199px) and (width >=992px) {
+    .visible-md {
+        display: block !important
+    }
+
+    .hidden-md {
+        display: none !important
+    }
+}
+
+@media(width <=991px) and (width >=768px) {
+    .visible-sm {
+        display: block !important
+    }
+
+    .hidden-sm {
+        display: none !important
+    }
+}
+
+@media(width <=1023px) {
+    .container {
+        width: 100%;
+        padding-right: 30px;
+        padding-left: 30px
+    }
+}
+
+/* Additional responsive enhancements */
+@media (width <=576px) {
+    .container {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    .stui-header__logo {
+        margin-left: 10px;
+    }
+
+    .navbar-toggle {
+        right: 10px;
+    }
+}
+
+@media(width <=768px) {
+    .visible-xs {
+        display: block !important
+    }
+
+    .hidden-xs {
+        display: none !important
+    }
+
+    .container {
+        padding: 0
+    }
+
+    .row {
+        margin: 0
+    }
+
+    .col-pd {
+        padding: 10px
+    }
+
+    .stui-header__menu {
+        position: relative;
+        margin: 0;
+        overflow: auto;
+        white-space: nowrap;
+        overflow: scroll hidden;
+        -webkit-overflow-scrolling: touch
+    }
+
+    .stui-header__menu>li {
+        float: none;
+        display: inline-block
+    }
+
+    .stui-header__menu>li>a {
+        padding: 10px 15px;
+        font-size: 0.875rem;
+    }
+
+    .stui-header__menu li:hover .dropdown {
+        display: none
+    }
+
+    .stui-vodlist li {
+        padding: 10px
+    }
+
+    .stui-vodlist li span,
+    .stui-vodlist li h3 {
+        display: block;
+        float: none
+    }
+
+    .stui-vodlist li .title {
+        font-size: 1rem;
+        width: 100%;
+        margin-bottom: 10px
+    }
+
+    .stui-vodlist li .type {
+        width: auto;
+        text-align: left;
+        float: left;
+        margin-right: 10px
+    }
+
+    .stui-vodlist li .time {
+        width: auto;
+        text-align: left;
+        float: left
+    }
+
+    .stui-page {
+        margin: 10px 0 0;
+        padding: 0 10px
+    }
+
+    .stui-page li {
+        float: left;
+        width: 20%;
+        margin: 0;
+        padding: 0 5px
+    }
+
+    .stui-page li a,
+    .stui-page li .num {
+        display: block;
+        padding: 5px 0;
+        text-align: center
+    }
+}

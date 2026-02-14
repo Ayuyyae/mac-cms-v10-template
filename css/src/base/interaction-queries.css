@@ -1,0 +1,55 @@
+@charset "utf-8";
+
+/* Touch and hover interaction media queries */
+
+/* Touch-specific enhancements */
+
+@media (hover: none) and (pointer: coarse) {
+
+    /* Remove hover effects on touch devices */
+    a:hover,
+    button:hover,
+    .stui-page li a:hover {
+        background-color: transparent;
+        color: inherit;
+        transform: none;
+    }
+
+    /* Increase touch target sizes on touch devices */
+    .stui-header__menu>li>a {
+        min-height: 48px;
+        min-width: 48px;
+        padding: 12px 15px;
+    }
+
+    /* Improve touch feedback */
+    a:active,
+    button:active,
+    .stui-page li a:active {
+        transform: scale(0.95);
+        transition: transform 0.1s ease;
+    }
+
+    /* Touch-friendly focus states */
+    a:focus,
+    button:focus {
+        outline: 2px solid var(--theme-color);
+        outline-offset: 2px;
+    }
+}
+
+/* Enhancements for devices with hover capability */
+@media (hover: hover) and (pointer: fine) {
+
+    a:hover,
+    button:hover {
+        background-color: transparent;
+    }
+
+    .stui-page li a:hover:not(.disabled) {
+        background-color: var(--theme-color);
+        color: var(--paging-text);
+        border: 1px solid var(--theme-color);
+        transform: scale(1.05);
+    }
+}
